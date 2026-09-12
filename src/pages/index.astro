@@ -1,5 +1,10 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Arch from "@/components/Arch.astro";
+import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import Button from "@/components/Button.astro";
+import CredibilityBand from "@/components/CredibilityBand.astro";
+import JaaliTexture from "@/components/JaaliTexture.astro";
 import { site } from "@/content/site";
 ---
 
@@ -7,8 +12,37 @@ import { site } from "@/content/site";
   title={`${site.name} — Learn Bharatanatyam from Ahmedabad`}
   description="Live weekend classes for children in the USA and Canada, taught by a Master's-qualified guru in the Pandanallur tradition."
 >
-  <main class="min-h-screen bg-oxblood on-oxblood p-8">
-    <h1 class="font-display text-5xl">{site.name}</h1>
-    <p class="text-base measure mt-4">Scaffold check — tokens, fonts, and content layer are wired up.</p>
+  <main>
+    <section class="relative overflow-hidden bg-oxblood px-4 py-10 sm:px-6 sm:py-16">
+      <JaaliTexture />
+      <div class="relative z-10 mx-auto max-w-xl">
+        <Arch id="hero-photo" aspectRatio="4/5">
+          <PlaceholderImage id="hero-binni-aramandi" />
+        </Arch>
+
+        <div
+          class="on-oxblood border-x-2 border-b-2 border-gold bg-oxblood-deep px-8 py-8 sm:px-12 sm:py-10"
+        >
+          <h1 class="font-display text-4xl sm:text-5xl">
+            Learn Bharatanatyam from Ahmedabad.
+          </h1>
+          <p class="measure mt-4 text-base">
+            Live weekend classes for children in the USA and Canada, taught
+            by a Master's-qualified guru in the Pandanallur tradition.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-3">
+            <Button href="/trial" variant="gold"
+              >Book a free trial class</Button
+            >
+            <Button href="/fees#in-person" variant="peacock-outline"
+              >I'm in Ahmedabad — see local classes</Button
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CredibilityBand />
   </main>
 </Layout>

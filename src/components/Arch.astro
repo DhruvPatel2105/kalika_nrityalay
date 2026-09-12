@@ -1,0 +1,55 @@
+---
+/**
+ * The torana frame — brief section 4. Clips its slot content to a
+ * pointed temple-arch silhouette and traces the same shape with a gold
+ * hairline. Path is authored in objectBoundingBox units (0–1) so it
+ * scales to any container size/aspect ratio without recomputation.
+ */
+interface Props {
+  id: string;
+  /** Omit to let height follow content (used for the hero's full arch). */
+  aspectRatio?: string;
+  class?: string;
+}
+
+const { id, aspectRatio, class: className = "" } = Astro.props;
+
+// Flush to the box edges (no inset) so a plain bordered rectangle placed
+// directly below an Arch lines up with its sides — see the hero, where
+// the arch (photo) and the panel below it (headline/CTAs) read as one
+// continuous archway.
+const ARCH_PATH =
+  "M0 1 L0 0.4 C0 0.18 0.15 0.02 0.5 0.02 C0.85 0.02 1 0.18 1 0.4 L1 1 Z";
+const clipId = `arch-clip-${id}`;
+const aspectStyle = aspectRatio ? `aspect-ratio: ${aspectRatio}` : "";
+// With a fixed aspect ratio the parent already has a definite height, so
+// the clipped wrapper can be laid out absolutely. Without one (the
+// hero's content-sized arch), the wrapper must stay in normal flow —
+// an absolutely positioned child can't establish its parent's height.
+const wrapperPosition = aspectRatio ? "absolute inset-0" : "relative";
+---
+
+<div class={`relative ${className}`} style={aspectStyle}>
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <defs>
+      <clipPath id={clipId} clipPathUnits="objectBoundingBox">
+        <path d={ARCH_PATH}></path>
+      </clipPath>
+    </defs>
+  </svg>
+  <div class={wrapperPosition} style={`clip-path: url(#${clipId})`}>
+    <slot />
+  </div>
+  <svg
+    class="pointer-events-none absolute inset-0 h-full w-full"
+    viewBox="0 0 1 1"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d={ARCH_PATH}
+      fill="none"
+      stroke="var(--color-gold)"
+      stroke-width="0.008"></path>
+  </svg>
+</div>

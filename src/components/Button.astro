@@ -1,0 +1,26 @@
+---
+/**
+ * No appended arrows (brief section 4 "explicitly avoid"). Copy is
+ * passed in verbatim via the slot — callers use the brief's exact text.
+ */
+interface Props {
+  href: string;
+  variant?: "gold" | "peacock-outline";
+  class?: string;
+}
+
+const { href, variant = "gold", class: className = "" } = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center px-6 py-3 font-body text-base font-medium transition-colors";
+
+const variants = {
+  gold: "bg-gold text-oxblood-deep hover:bg-gold-light",
+  "peacock-outline":
+    "border-2 border-peacock-light text-sandalwood hover:bg-peacock-light/10",
+};
+---
+
+<a href={href} class={`${base} ${variants[variant]} ${className}`}>
+  <slot />
+</a>

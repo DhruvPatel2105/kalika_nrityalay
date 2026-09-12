@@ -1,0 +1,44 @@
+---
+/**
+ * "The credibility band" — brief section 6: sits immediately under the
+ * hero because it answers the question the parent is actually asking.
+ * Four stacked facts, not an icon grid, no ALL-CAPS eyebrows.
+ */
+import { site } from "@/content/site";
+import JaaliTexture from "@/components/JaaliTexture.astro";
+
+const facts = [
+  {
+    label: site.guru.credential,
+    detail: "the Master's-equivalent certification in Bharatanatyam",
+  },
+  {
+    label: site.guru.lineage,
+    detail: `trained under Guru ${site.guru.trainedUnder}`,
+  },
+  {
+    label: `${site.guru.school.name}, est. ${site.guru.school.foundedYear}`,
+    detail: "one of Gujarat's oldest classical dance institutions",
+  },
+  {
+    label: `${site.credibility.inPersonStudentCount} students`,
+    detail: `learning in ${site.location.area}, ${site.location.city} since ${site.credibility.inPersonStudentsSince}`,
+  },
+];
+---
+
+<section class="on-oxblood relative overflow-hidden bg-oxblood-deep py-12 sm:py-16">
+  <JaaliTexture />
+  <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6">
+    <ul class="grid gap-6 sm:grid-cols-2">
+      {
+        facts.map((fact) => (
+          <li class="border-l-2 border-gold/40 pl-4">
+            <p class="font-display text-lg text-gold-light">{fact.label}</p>
+            <p class="mt-1 text-base text-sandalwood/90">{fact.detail}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

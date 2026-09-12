@@ -1,0 +1,65 @@
+---
+import { site } from "@/content/site";
+
+const links = [
+  { href: "/guru", label: "Our Guru" },
+  { href: "/classes", label: "Classes" },
+  { href: "/curriculum", label: "Curriculum" },
+  { href: "/fees", label: "Fees" },
+  { href: "/trial", label: "Book a free trial" },
+];
+
+const whatsappHref = `https://wa.me/${site.contact.whatsapp.digitsOnly}`;
+---
+
+<footer class="on-oxblood bg-oxblood-deep">
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="grid gap-10 sm:grid-cols-3">
+      <div>
+        <p class="font-display text-lg">{site.name}</p>
+        <p class="mt-2 text-base text-sandalwood/80">
+          {site.location.area}, {site.location.city}, {site.location.country}
+        </p>
+        <p class="mt-1 text-base text-sandalwood/80">
+          Founded {site.founded.month} {site.founded.year}
+        </p>
+      </div>
+
+      <nav aria-label="Footer">
+        <ul class="space-y-2">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-base text-sandalwood/90 hover:text-gold-light"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <p class="text-base text-sandalwood/90">
+          <a href={whatsappHref} class="hover:text-gold-light"
+            >WhatsApp: {site.contact.whatsapp.display}</a
+          >
+        </p>
+        <p class="mt-2 text-base text-sandalwood/90">
+          <a
+            href={site.contact.instagram}
+            class="hover:text-gold-light"
+            rel="noopener noreferrer">Instagram</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <p class="mt-10 border-t border-sandalwood/10 pt-6 text-sm text-sandalwood/60">
+      &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
+    </p>
+  </div>
+</footer>

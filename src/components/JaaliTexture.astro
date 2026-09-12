@@ -1,0 +1,44 @@
+---
+/**
+ * Low-opacity lattice texture for oxblood sections — brief section 4:
+ * "at 3-5% opacity, it should read as material, not pattern." Absolutely
+ * positioned; place inside a `relative` section and keep content above
+ * it with z-10.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+const patternId = "jaali-lattice";
+---
+
+<svg
+  class={`pointer-events-none absolute inset-0 h-full w-full opacity-[0.04] ${className}`}
+  aria-hidden="true"
+  preserveAspectRatio="none"
+>
+  <defs>
+    <pattern
+      id={patternId}
+      width="48"
+      height="48"
+      patternUnits="userSpaceOnUse"
+      patternTransform="rotate(45)"
+    >
+      <rect width="48" height="48" fill="none"></rect>
+      <path
+        d="M24 0 V48 M0 24 H48"
+        stroke="var(--color-gold-light)"
+        stroke-width="1"></path>
+      <rect
+        x="12"
+        y="12"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="var(--color-gold-light)"
+        stroke-width="1"></rect>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill={`url(#${patternId})`}></rect>
+</svg>
