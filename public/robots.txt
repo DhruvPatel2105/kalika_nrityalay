@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /trial/thank-you
+
+# TODO(domain): update once the real domain is registered — see
+# astro.config.mjs and src/content/site.ts.
+Sitemap: https://kalikanrityalay.com/sitemap.xml

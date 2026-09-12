@@ -2,13 +2,33 @@
 import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import { localBusinessSchema } from "@/lib/schema";
 
 interface Props {
   title: string;
   description: string;
+  /** Shorter, WhatsApp-safe variants — brief section 9: og:title <60
+   * chars, og:description <110. Falls back to title/description. */
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  /** Additional JSON-LD objects for this page, beyond the sitewide
+   * LocalBusiness schema every page already carries. */
+  schema?: unknown[];
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  ogTitle = title,
+  ogDescription = description,
+  ogImage = "/og/default.png",
+  schema = [],
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const allSchema = [localBusinessSchema(), ...schema];
 ---
 
 <!doctype html>
@@ -18,7 +38,26 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kalika Nrityalay" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    {
+      allSchema.map((item) => (
+        <script type="application/ld+json" set:html={JSON.stringify(item)} is:inline />
+      ))
+    }
   </head>
   <body class="bg-sandalwood font-body text-ink">
     <Header />

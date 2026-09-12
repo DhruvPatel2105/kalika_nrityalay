@@ -5,15 +5,20 @@ import FeePanel from "@/components/FeePanel.astro";
 import Button from "@/components/Button.astro";
 import FAQAccordion from "@/components/FAQAccordion.astro";
 import { site } from "@/content/site";
+import { faqPageSchema } from "@/lib/schema";
 
 const online = site.pricing.online;
 const inPerson = site.pricing.inPerson;
 const whatsappHref = `https://wa.me/${site.contact.whatsapp.digitsOnly}`;
+const feesSchema = [faqPageSchema("fees")].filter(Boolean);
 ---
 
 <Layout
-  title={`Fees — ${site.name}`}
-  description={`$${online.monthly}/month for online Bharatanatyam classes, two sessions a week. First trial class free.`}
+  title={`Fees — Online Classes & ${site.location.area} Studio — ${site.name}`}
+  description={`$${online.monthly}/month for online Bharatanatyam classes, two sessions a week. First trial class free. In-person fees for the ${site.location.area} studio also listed.`}
+  ogTitle="Bharatanatyam Class Fees"
+  ogDescription={`$${online.monthly}/month online, two classes a week. First trial class free, no registration fee.`}
+  schema={feesSchema}
 >
   <main>
     <PageIntro title="Fees" />

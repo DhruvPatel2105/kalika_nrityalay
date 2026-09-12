@@ -5,13 +5,17 @@ import Arch from "@/components/Arch.astro";
 import PlaceholderImage from "@/components/PlaceholderImage.astro";
 import TrialCTA from "@/components/TrialCTA.astro";
 import { site } from "@/content/site";
+import { personSchema } from "@/lib/schema";
 
 const g = site.guru;
 ---
 
 <Layout
-  title={`Binni Patel — ${site.name}`}
+  title={`Binni Patel, Bharatanatyam Guru — ${site.name}`}
   description={`Trained under Ananth Menon at Mudra School, Binni Patel holds ${g.credential} in the Pandanallur tradition.`}
+  ogTitle="Binni Patel — Bharatanatyam Guru"
+  ogDescription={`Trained under Ananth Menon, Binni holds ${g.credential} in the Pandanallur tradition.`}
+  schema={[personSchema()]}
 >
   <main>
     <PageIntro title="Binni Patel" />

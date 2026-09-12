@@ -6,11 +6,19 @@ import PlaceholderImage from "@/components/PlaceholderImage.astro";
 import FAQAccordion from "@/components/FAQAccordion.astro";
 import TrialCTA from "@/components/TrialCTA.astro";
 import { site } from "@/content/site";
+import { coursesSchema, faqPageSchema } from "@/lib/schema";
+
+const classesSchema = [...coursesSchema(), faqPageSchema("classes")].filter(
+  Boolean,
+);
 ---
 
 <Layout
-  title={`Online classes for USA & Canada — ${site.name}`}
+  title={`Online Bharatanatyam Classes for Kids, USA & Canada — ${site.name}`}
   description="Live weekend Bharatanatyam classes for children in the USA and Canada, small batches, recorded on Zoom for makeup."
+  ogTitle="Online Classes — USA & Canada"
+  ogDescription="Live weekend Bharatanatyam classes, small batches of 6-8, recorded on Zoom for makeup."
+  schema={classesSchema}
 >
   <main>
     <PageIntro
