@@ -3,6 +3,10 @@ dist/
 .astro/
 lighthouse-reports/
 
+# raw uploads awaiting processing — see assets-inbox/README.md
+assets-inbox/*
+!assets-inbox/README.md
+
 # dependencies
 node_modules/
 

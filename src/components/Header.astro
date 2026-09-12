@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { site } from "@/content/site";
+import logoEmblem from "@/images/logo-emblem-oxblood.png";
 
 const navLinks = [
   { href: "/guru", label: "Our Guru" },
@@ -13,7 +15,16 @@ const navLinks = [
   <div
     class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6"
   >
-    <a href="/" class="font-display text-xl text-oxblood">{site.name}</a>
+    <a href="/" class="flex items-center gap-2.5">
+      <Image
+        src={logoEmblem}
+        alt=""
+        width={76}
+        height={36}
+        class="h-[18px] w-auto"
+      />
+      <span class="font-display text-xl text-oxblood">{site.name}</span>
+    </a>
 
     <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
       {

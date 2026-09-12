@@ -15,7 +15,7 @@
  * fades, geometry traces) — see the shared arch-stroke-draw keyframes
  * and the photo-fade-in class below.
  */
-import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import SiteImage from "@/components/SiteImage.astro";
 import AramandiGeometryOverlay from "@/components/AramandiGeometryOverlay.astro";
 import JaaliTexture from "@/components/JaaliTexture.astro";
 import { ARCH_PATH, archPathLength } from "@/lib/geometry";
@@ -57,7 +57,7 @@ const archLength = archPathLength();
 
     <div class="parallax-layer absolute inset-0" data-depth="0" data-scale="1">
       <div class="photo-fade-in h-full w-full" style={`clip-path: url(#${clipId})`}>
-        <PlaceholderImage id="hero-binni-aramandi" />
+        <SiteImage id="hero-binni-aramandi" />
       </div>
     </div>
 

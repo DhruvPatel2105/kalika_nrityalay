@@ -1,12 +1,14 @@
 /**
  * Every image slot the site needs, defined before any photography
- * exists. Until `status` is "final", components render a labelled
- * PlaceholderImage at this exact aspect ratio instead of a real <img> —
+ * exists. Until `status` is "final", <SiteImage> renders a labelled
+ * placeholder at this exact aspect ratio instead of a real <img> —
  * never a stock photo, never an AI-generated dancer. See BRIEF.md
  * section 8 and the Appendix shot list.
  *
- * When real photography lands, set `path` and flip `status` to
- * "final" — no component changes required.
+ * When a real photo lands: drop the file in src/images/, set `path`
+ * to its filename there, flip `status` to "final". <SiteImage> picks
+ * it up automatically via the glob map in lib/imageAssets.ts — no
+ * component changes needed.
  */
 
 export interface ImageSlot {
@@ -18,6 +20,7 @@ export interface ImageSlot {
   focalPoint: "center" | "top" | "bottom";
   pages: string[];
   status: "placeholder" | "final";
+  /** Filename within src/images/, e.g. "studio-wide.jpg". Null until shot. */
   path: string | null;
 }
 
@@ -43,6 +46,17 @@ export const images: ImageSlot[] = [
     pages: ["/guru"],
     status: "placeholder",
     path: null,
+  },
+  {
+    id: "binni-performing",
+    alt: "Binni Patel performing Bharatanatyam on stage, in full costume and makeup.",
+    aspectRatio: "1144:1430",
+    width: 1144,
+    height: 1430,
+    focalPoint: "top",
+    pages: ["/guru"],
+    status: "final",
+    path: "binni-performing.jpg",
   },
   {
     id: "hasta-detail",
@@ -79,14 +93,14 @@ export const images: ImageSlot[] = [
   },
   {
     id: "studio-wide",
-    alt: "Wide view of the Vastral studio with students standing in a row, each in aramandi.",
-    aspectRatio: "16:9",
-    width: 1600,
-    height: 900,
+    alt: "Five students at the Vastral studio in Bharatanatyam costume, hands folded in a namaskaram greeting.",
+    aspectRatio: "1404:790",
+    width: 1404,
+    height: 790,
     focalPoint: "center",
-    pages: ["/", "/classes"],
-    status: "placeholder",
-    path: null,
+    pages: ["/classes"],
+    status: "final",
+    path: "studio-wide.jpg",
   },
   {
     id: "students-adavu-back",

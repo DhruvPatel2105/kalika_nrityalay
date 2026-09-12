@@ -1,0 +1,46 @@
+---
+/**
+ * Resolves one images.ts slot: a real, optimized <Image> once
+ * `status` is "final", otherwise the labelled placeholder box at the
+ * same aspect ratio. Never a stock photo, never AI-generated — see
+ * BRIEF.md sections 2 & 8.
+ */
+import { Image } from "astro:assets";
+import { getImage } from "@/content/images";
+import { resolveImageAsset } from "@/lib/imageAssets";
+
+interface Props {
+  id: string;
+  class?: string;
+}
+
+const { id, class: className = "" } = Astro.props;
+const slot = getImage(id);
+const asset =
+  slot.status === "final" && slot.path ? resolveImageAsset(slot.path) : null;
+---
+
+{
+  asset ? (
+    <Image
+      src={asset}
+      alt={slot.alt}
+      class={`h-full w-full object-cover ${className}`}
+      loading="lazy"
+    />
+  ) : (
+    <div
+      class={`flex h-full w-full flex-col items-center justify-center gap-1 bg-[repeating-linear-gradient(135deg,var(--color-oxblood-deep),var(--color-oxblood-deep)_10px,var(--color-oxblood)_10px,var(--color-oxblood)_20px)] px-4 text-center ${className}`}
+      role="img"
+      aria-label={slot.alt}
+    >
+      <span class="font-body text-xs tracking-wide text-gold-light/80 uppercase">
+        Placeholder
+      </span>
+      <span class="font-body text-sm text-sandalwood">{slot.id}</span>
+      <span class="font-body text-xs text-sandalwood/70">
+        {slot.aspectRatio} · {slot.width}×{slot.height}
+      </span>
+    </div>
+  )
+}

@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import PageIntro from "@/components/PageIntro.astro";
 import Arch from "@/components/Arch.astro";
-import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import SiteImage from "@/components/SiteImage.astro";
 import TrialCTA from "@/components/TrialCTA.astro";
 import { site } from "@/content/site";
 import { personSchema } from "@/lib/schema";
@@ -23,7 +23,7 @@ const g = site.guru;
     <section class="bg-sandalwood px-4 pb-16 sm:px-6">
       <div class="mx-auto grid max-w-4xl gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:items-start">
         <Arch id="guru-portrait" aspectRatio="4/5" class="mx-auto w-full max-w-xs">
-          <PlaceholderImage id="binni-portrait" />
+          <SiteImage id="binni-portrait" />
         </Arch>
 
         <div class="measure">
@@ -59,10 +59,21 @@ const g = site.guru;
     </section>
 
     <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-xs">
+        <Arch id="binni-performing" aspectRatio="4/5">
+          <SiteImage id="binni-performing" />
+        </Arch>
+        <p class="mt-4 text-center text-sm text-ink/70">
+          Binni performing on stage.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 pb-14 sm:px-6 sm:pb-20">
       <div class="mx-auto grid max-w-3xl grid-cols-3 gap-4">
-        <PlaceholderImage id="detail-salangai" class="aspect-square" />
-        <PlaceholderImage id="detail-diya" class="aspect-square" />
-        <PlaceholderImage id="detail-doorway" class="aspect-square" />
+        <SiteImage id="detail-salangai" class="aspect-square" />
+        <SiteImage id="detail-diya" class="aspect-square" />
+        <SiteImage id="detail-doorway" class="aspect-square" />
       </div>
     </section>
 

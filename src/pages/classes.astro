@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import PageIntro from "@/components/PageIntro.astro";
 import Arch from "@/components/Arch.astro";
-import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import SiteImage from "@/components/SiteImage.astro";
 import FAQAccordion from "@/components/FAQAccordion.astro";
 import TrialCTA from "@/components/TrialCTA.astro";
 import { site } from "@/content/site";
@@ -55,8 +55,19 @@ const classesSchema = [...coursesSchema(), faqPageSchema("classes")].filter(
           aspectRatio="4/3"
           class="order-1 w-full sm:order-2"
         >
-          <PlaceholderImage id="binni-teaching" />
+          <SiteImage id="binni-teaching" />
         </Arch>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto max-w-3xl">
+        <div class="border border-gold/60">
+          <SiteImage id="studio-wide" class="aspect-[1404/790]" />
+        </div>
+        <p class="mt-3 text-center text-sm text-ink/70">
+          Students at the Vastral studio.
+        </p>
       </div>
     </section>
 
