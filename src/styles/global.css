@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------- */
+/* Fonts — self-hosted, Latin subset only. Karla ships as a single        */
+/* variable-weight file (400–700); Marcellus ships as 400 only, since     */
+/* display type never needs a second weight in this design.               */
+/* ---------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/karla-latin-variable.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Marcellus";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/marcellus-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Design tokens — brief section 4. Values are the brand palette as       */
+/* specified; do not add hues. peacock-light and error are derived AA-    */
+/* checked utility shades of the two nearest brand colours, not new ones. */
+/* ---------------------------------------------------------------------- */
+
+@theme {
+  --color-ink: #1a1210;
+  --color-oxblood: #4a0d18;
+  --color-oxblood-deep: #2e0810;
+  --color-gold: #c9a227;
+  --color-gold-light: #e3c766;
+  --color-sandalwood: #efe3d0;
+  --color-peacock: #1f4a44;
+  --color-peacock-light: #3d7a70;
+  --color-error: #7a2331;
+
+  --font-display: "Marcellus", ui-serif, Georgia, serif;
+  --font-body: "Karla", ui-sans-serif, system-ui, sans-serif;
+
+  /*
+   * Type scale — brief section 4: 1.250 (major third) mobile,
+   * 1.333 (perfect fourth) from md up, base 17px / 1.0625rem.
+   * Mobile values apply by default; the md+ block below overrides
+   * the same custom properties so every text-* utility resizes at
+   * the breakpoint without needing md: variants at every call site.
+   */
+  --text-base: 1.0625rem; /* 17px */
+  --text-base--line-height: 1.65;
+  --text-lg: 1.3281rem; /* 21px */
+  --text-lg--line-height: 1.4;
+  --text-xl: 1.6602rem; /* 27px */
+  --text-xl--line-height: 1.3;
+  --text-2xl: 2.0752rem; /* 33px */
+  --text-2xl--line-height: 1.2;
+  --text-3xl: 2.594rem; /* 42px */
+  --text-3xl--line-height: 1.15;
+  --text-4xl: 3.2425rem; /* 52px */
+  --text-4xl--line-height: 1.1;
+  --text-5xl: 4.0532rem; /* 65px */
+  --text-5xl--line-height: 1.05;
+}
+
+@media (width >= 48rem) {
+  /* Tailwind's md breakpoint, 768px */
+  :root {
+    --text-lg: 1.4163rem; /* 23px */
+    --text-xl: 1.8875rem; /* 30px */
+    --text-2xl: 2.5159rem; /* 41px */
+    --text-3xl: 3.3537rem; /* 54px */
+    --text-4xl: 4.4703rem; /* 72px */
+    --text-5xl: 5.9589rem; /* 96px */
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Base element defaults                                                  */
+/* ---------------------------------------------------------------------- */
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-sandalwood);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+/* Fixed pairing rule (brief section 4): body copy on oxblood surfaces is
+   always sandalwood, never gold — gold is reserved for display type >=
+   24px, hairlines, and icons. Enforced here so components can't drift. */
+.on-oxblood {
+  color: var(--color-sandalwood);
+}
+.on-oxblood h1,
+.on-oxblood h2,
+.on-oxblood h3,
+.on-oxblood h4 {
+  color: var(--color-gold-light);
+}
+
+.measure {
+  max-width: 68ch;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
