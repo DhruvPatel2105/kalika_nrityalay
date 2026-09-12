@@ -18,6 +18,17 @@ const variants = {
 };
 ---
 
-<div id={id} class={`rounded-sm p-8 sm:p-10 ${variants[variant]} ${className}`}>
+<div
+  id={id}
+  data-tilt
+  class={`rounded-sm p-8 transition-transform duration-150 ease-out sm:p-10 ${variants[variant]} ${className}`}
+>
   <slot />
 </div>
+
+<script>
+  import { initCardTilt } from "@/islands/card-tilt";
+  document
+    .querySelectorAll<HTMLElement>("[data-tilt]")
+    .forEach((el) => initCardTilt(el));
+</script>

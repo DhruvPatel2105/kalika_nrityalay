@@ -1,0 +1,139 @@
+---
+/**
+ * Hero parallax — brief section 5. Four layers at fixed depths inside
+ * a perspective scene; a small island tilts the whole scene toward the
+ * pointer and slightly on scroll (rAF + lerp). Disabled below 768px
+ * and under prefers-reduced-motion via the .parallax-scene base CSS
+ * (transforms default to none), so JS never needs to feature-detect —
+ * it just never has a visible effect to drive on those setups.
+ *
+ * Layers 0/1 (wall texture, arch hairline) are decorative and use an
+ * abstract blurred jaali texture, not a photo — there isn't a real
+ * temple-wall photograph, and section 2 rules out any stand-in.
+ *
+ * Also carries the one orchestrated entrance (arch draws, photo
+ * fades, geometry traces) — see the shared arch-stroke-draw keyframes
+ * and the photo-fade-in class below.
+ */
+import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import AramandiGeometryOverlay from "@/components/AramandiGeometryOverlay.astro";
+import JaaliTexture from "@/components/JaaliTexture.astro";
+import { ARCH_PATH, archPathLength } from "@/lib/geometry";
+
+const clipId = "hero-parallax-clip";
+const archLength = archPathLength();
+---
+
+<div class="parallax-container relative" style="aspect-ratio: 4/5;">
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <defs>
+      <clipPath id={clipId} clipPathUnits="objectBoundingBox">
+        <path d={ARCH_PATH}></path>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <div class="parallax-scene absolute inset-0" data-parallax-scene>
+    <div class="parallax-layer absolute inset-0" data-depth="-600" data-scale="1.6">
+      <div class="h-full w-full overflow-hidden blur-2xl" style={`clip-path: url(#${clipId})`}>
+        <div class="relative h-full w-full bg-oxblood-deep">
+          <JaaliTexture class="opacity-30" />
+        </div>
+      </div>
+    </div>
+
+    <div class="parallax-layer absolute inset-0" data-depth="-300" data-scale="1.3">
+      <svg viewBox="0 0 1 1" preserveAspectRatio="none" class="h-full w-full" aria-hidden="true">
+        <path
+          d={ARCH_PATH}
+          fill="none"
+          stroke="var(--color-gold)"
+          stroke-width="0.008"
+          class="arch-stroke-draw"
+          style={`stroke-dasharray: ${archLength}; --arch-length: ${archLength};`}
+        ></path>
+      </svg>
+    </div>
+
+    <div class="parallax-layer absolute inset-0" data-depth="0" data-scale="1">
+      <div class="photo-fade-in h-full w-full" style={`clip-path: url(#${clipId})`}>
+        <PlaceholderImage id="hero-binni-aramandi" />
+      </div>
+    </div>
+
+    <div class="parallax-layer absolute inset-0" data-depth="120" data-scale="0.94">
+      <div class="h-full w-full" style={`clip-path: url(#${clipId})`}>
+        <AramandiGeometryOverlay />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .parallax-container {
+    perspective: 1000px;
+  }
+  .parallax-scene {
+    transform-style: preserve-3d;
+  }
+  .parallax-layer {
+    transform: translateZ(calc(var(--depth, 0) * 1px)) scale(var(--scale, 1));
+    transform-style: preserve-3d;
+  }
+
+  /* Static composed image below 768px and under reduced motion — no
+     depth, no rotation, just the flat stacked layers. */
+  @media (max-width: 767px), (prefers-reduced-motion: reduce) {
+    .parallax-container {
+      perspective: none;
+    }
+    .parallax-layer {
+      transform: none !important;
+    }
+  }
+
+  /* Orchestrated entrance — arch draws, then photo fades in. */
+  .arch-stroke-draw {
+    stroke-dashoffset: 0;
+  }
+  .photo-fade-in {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .arch-stroke-draw {
+      animation: arch-draw 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .photo-fade-in {
+      animation: photo-fade 0.8s ease-out forwards;
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+    @keyframes arch-draw {
+      from {
+        stroke-dashoffset: var(--arch-length);
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    @keyframes photo-fade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+</style>
+
+<script>
+  import { initHeroParallax } from "@/islands/hero-parallax";
+  document.querySelectorAll<HTMLElement>("[data-parallax-scene]").forEach((el) => {
+    el.querySelectorAll<HTMLElement>(".parallax-layer").forEach((layer) => {
+      layer.style.setProperty("--depth", layer.dataset.depth ?? "0");
+      layer.style.setProperty("--scale", layer.dataset.scale ?? "1");
+    });
+    initHeroParallax(el);
+  });
+</script>

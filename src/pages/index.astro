@@ -1,7 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Arch from "@/components/Arch.astro";
-import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import HeroParallax from "@/components/HeroParallax.astro";
 import Button from "@/components/Button.astro";
 import CredibilityBand from "@/components/CredibilityBand.astro";
 import JaaliTexture from "@/components/JaaliTexture.astro";
@@ -23,12 +22,10 @@ import { site } from "@/content/site";
     <section class="relative overflow-hidden bg-oxblood px-4 py-10 sm:px-6 sm:py-16">
       <JaaliTexture />
       <div class="relative z-10 mx-auto max-w-xl">
-        <Arch id="hero-photo" aspectRatio="4/5">
-          <PlaceholderImage id="hero-binni-aramandi" />
-        </Arch>
+        <HeroParallax />
 
         <div
-          class="on-oxblood border-x-2 border-b-2 border-gold bg-oxblood-deep px-8 py-8 sm:px-12 sm:py-10"
+          class="on-oxblood hero-copy-rise border-x-2 border-b-2 border-gold bg-oxblood-deep px-8 py-8 sm:px-12 sm:py-10"
         >
           <h1 class="font-display text-4xl sm:text-5xl">
             Learn Bharatanatyam from Ahmedabad.
@@ -57,3 +54,26 @@ import { site } from "@/content/site";
     <TrialCTA />
   </main>
 </Layout>
+
+<style>
+  /* Final beat of the hero's one orchestrated entrance (brief section
+     5) — the headline/copy panel rises in after the arch and photo. */
+  .hero-copy-rise {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-copy-rise {
+      animation: copy-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.9s;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    @keyframes copy-rise {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+</style>

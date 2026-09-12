@@ -5,21 +5,19 @@
  * hairline. Path is authored in objectBoundingBox units (0–1) so it
  * scales to any container size/aspect ratio without recomputation.
  */
+import { ARCH_PATH, archPathLength } from "@/lib/geometry";
+
 interface Props {
   id: string;
   /** Omit to let height follow content (used for the hero's full arch). */
   aspectRatio?: string;
   class?: string;
+  /** Stroke draws on load instead of appearing static — hero only,
+   * part of the one orchestrated entrance (brief section 5). */
+  animate?: boolean;
 }
 
-const { id, aspectRatio, class: className = "" } = Astro.props;
-
-// Flush to the box edges (no inset) so a plain bordered rectangle placed
-// directly below an Arch lines up with its sides — see the hero, where
-// the arch (photo) and the panel below it (headline/CTAs) read as one
-// continuous archway.
-const ARCH_PATH =
-  "M0 1 L0 0.4 C0 0.18 0.15 0.02 0.5 0.02 C0.85 0.02 1 0.18 1 0.4 L1 1 Z";
+const { id, aspectRatio, class: className = "", animate = false } = Astro.props;
 const clipId = `arch-clip-${id}`;
 const aspectStyle = aspectRatio ? `aspect-ratio: ${aspectRatio}` : "";
 // With a fixed aspect ratio the parent already has a definite height, so
@@ -27,6 +25,7 @@ const aspectStyle = aspectRatio ? `aspect-ratio: ${aspectRatio}` : "";
 // hero's content-sized arch), the wrapper must stay in normal flow —
 // an absolutely positioned child can't establish its parent's height.
 const wrapperPosition = aspectRatio ? "absolute inset-0" : "relative";
+const pathLength = animate ? archPathLength() : 0;
 ---
 
 <div class={`relative ${className}`} style={aspectStyle}>
@@ -50,6 +49,32 @@ const wrapperPosition = aspectRatio ? "absolute inset-0" : "relative";
       d={ARCH_PATH}
       fill="none"
       stroke="var(--color-gold)"
-      stroke-width="0.008"></path>
+      stroke-width="0.008"
+      class={animate ? "arch-stroke-draw" : ""}
+      style={animate ? `stroke-dasharray: ${pathLength}; --arch-length: ${pathLength};` : ""}
+    ></path>
   </svg>
 </div>
+
+{
+  animate && (
+    <style>
+      .arch-stroke-draw {
+        stroke-dashoffset: 0;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .arch-stroke-draw {
+          animation: arch-draw 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes arch-draw {
+          from {
+            stroke-dashoffset: var(--arch-length);
+          }
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+      }
+    </style>
+  )
+}
