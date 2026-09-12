@@ -1,0 +1,38 @@
+---
+/**
+ * Server-rendered in IST — brief section 7: "Must render server-side
+ * with IST as the default so there is no layout shift when the client
+ * script upgrades it." The timezone converter island (step 4) enhances
+ * this same markup in place; it does not replace it.
+ */
+import { batches } from "@/content/schedule";
+import { formatISTTime } from "@/lib/time";
+---
+
+<section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+  <div class="mx-auto max-w-2xl">
+    <h2 class="font-display text-3xl text-oxblood">Class schedule</h2>
+    <p class="measure mt-3 text-base text-ink/80">
+      Times below are shown in India Standard Time. A converter for your
+      local time is on its way.
+    </p>
+
+    <ul class="mt-8 space-y-4">
+      {
+        batches.map((batch) => (
+          <li class="border border-oxblood/15 bg-white/40 p-6">
+            <p class="font-display text-xl text-oxblood">
+              {batch.name}, ages {batch.ageRange.min}–{batch.ageRange.max}
+            </p>
+            <p class="mt-2 text-base text-ink/80">
+              {batch.days.join(" & ")}, {formatISTTime(batch.startIST)}–{formatISTTime(batch.endIST)} IST
+            </p>
+            <p class="mt-1 text-sm text-ink/60">
+              {batch.seatsRemaining} seats remaining
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

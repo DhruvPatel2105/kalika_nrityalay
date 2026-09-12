@@ -1,0 +1,29 @@
+---
+/**
+ * Section opener for interior pages — centred is the one exception to
+ * left-aligned body content (brief section 4). No ALL-CAPS eyebrow.
+ */
+interface Props {
+  title: string;
+  intro?: string;
+}
+const { title, intro } = Astro.props;
+---
+
+<div class="mx-auto max-w-2xl px-4 pt-14 pb-10 text-center sm:px-6 sm:pt-20">
+  <svg
+    width="56"
+    height="40"
+    viewBox="0 0 56 40"
+    aria-hidden="true"
+    class="mx-auto mb-6"
+  >
+    <path
+      d="M4 38 V16 C4 6 14 2 28 2 C42 2 52 6 52 16 V38"
+      fill="none"
+      stroke="var(--color-gold)"
+      stroke-width="2"></path>
+  </svg>
+  <h1 class="font-display text-3xl text-oxblood sm:text-4xl">{title}</h1>
+  {intro && <p class="measure mx-auto mt-4 text-base text-ink/80">{intro}</p>}
+</div>

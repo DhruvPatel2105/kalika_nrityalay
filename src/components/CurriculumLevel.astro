@@ -1,0 +1,22 @@
+---
+/**
+ * Numbered markers — brief section 4: "01/02/03 numbered markers,
+ * unless the content really is a sequence... use them there and
+ * nowhere else." This is that one place.
+ */
+interface Props {
+  index: number;
+  title: string;
+}
+const { index, title } = Astro.props;
+const num = String(index).padStart(2, "0");
+---
+
+<li class="flex gap-5 border-t border-oxblood/15 py-6 first:border-t-0">
+  <span class="font-display text-2xl text-gold" aria-hidden="true">{num}</span
+  >
+  <div>
+    <p class="font-display text-xl text-oxblood">{title}</p>
+    <p class="mt-1 text-base text-ink/80"><slot /></p>
+  </div>
+</li>

@@ -1,0 +1,156 @@
+---
+import TrialLayout from "@/layouts/TrialLayout.astro";
+import { batches } from "@/content/schedule";
+import { formatISTTime } from "@/lib/time";
+import { site } from "@/content/site";
+---
+
+<TrialLayout
+  title={`Book a free trial class — ${site.name}`}
+  description="Book a free trial Bharatanatyam class. No registration fee — Binni replies on WhatsApp within 24 hours."
+>
+  <main class="px-4 py-10 sm:px-6 sm:py-16">
+    <div class="mx-auto max-w-xl">
+      <h1 class="font-display text-3xl text-oxblood sm:text-4xl">
+        Book a free trial class
+      </h1>
+      <p class="measure mt-3 text-lg text-ink/80">
+        Fill in your details and Binni will confirm a slot on WhatsApp,
+        usually within 24 hours. No registration fee.
+      </p>
+
+      <!--
+        TODO(step 5): wire to Netlify Forms (data-netlify, hidden
+        form-name field, honeypot) and point at a real confirmation
+        page once built.
+      -->
+      <form class="mt-10 space-y-6" method="POST">
+        <div>
+          <label
+            for="parent-name"
+            class="block font-body text-base font-medium text-ink"
+            >Parent's name</label
+          >
+          <input
+            id="parent-name"
+            name="parent-name"
+            type="text"
+            required
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block font-body text-base font-medium text-ink"
+            >Email</label
+          >
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          />
+        </div>
+
+        <div>
+          <label
+            for="whatsapp"
+            class="block font-body text-base font-medium text-ink"
+            >WhatsApp number, with country code</label
+          >
+          <input
+            id="whatsapp"
+            name="whatsapp"
+            type="tel"
+            placeholder="+1 555 123 4567"
+            required
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          />
+        </div>
+
+        <div>
+          <label
+            for="child-age"
+            class="block font-body text-base font-medium text-ink"
+            >Child's age</label
+          >
+          <input
+            id="child-age"
+            name="child-age"
+            type="number"
+            min="3"
+            max="18"
+            required
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          />
+        </div>
+
+        <div>
+          <label for="city" class="block font-body text-base font-medium text-ink"
+            >City and country</label
+          >
+          <input
+            id="city"
+            name="city"
+            type="text"
+            placeholder="e.g. Edison, NJ, USA"
+            required
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          />
+        </div>
+
+        <div>
+          <label
+            for="prior-training"
+            class="block font-body text-base font-medium text-ink"
+            >Any previous dance training? <span class="font-normal text-ink/60">(optional)</span></label
+          >
+          <textarea
+            id="prior-training"
+            name="prior-training"
+            rows="3"
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="preferred-slot" class="block font-body text-base font-medium text-ink"
+            >Preferred slot</label
+          >
+          <select
+            id="preferred-slot"
+            name="preferred-slot"
+            required
+            class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
+          >
+            {
+              batches.map((batch) => (
+                <option value={batch.id}>
+                  {batch.name} — {batch.days.join(" & ")},{" "}
+                  {formatISTTime(batch.startIST)}–{formatISTTime(batch.endIST)}{" "}
+                  IST
+                </option>
+              ))
+            }
+          </select>
+          <p class="mt-1 text-sm text-ink/60">
+            Shown in India Standard Time — a local-time converter is on its
+            way.
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-gold px-6 py-3 font-body text-base font-medium text-oxblood-deep hover:bg-gold-light"
+          >Request a free trial class</button
+        >
+
+        <p class="text-sm text-ink/60">
+          We only ask for your child's age here — not their name, photo, or
+          school.
+        </p>
+      </form>
+    </div>
+  </main>
+</TrialLayout>

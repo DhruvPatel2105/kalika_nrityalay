@@ -1,0 +1,39 @@
+---
+/**
+ * Single-purpose conversion page — brief section 6: "No navigation
+ * distractions." A trimmed header/footer, wordmark and contact only,
+ * no page nav list.
+ */
+import "@/styles/global.css";
+import { site } from "@/content/site";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body class="bg-sandalwood font-body text-ink">
+    <header class="bg-sandalwood px-4 py-4 sm:px-6">
+      <a href="/" class="font-display text-xl text-oxblood">{site.name}</a>
+    </header>
+
+    <slot />
+
+    <footer class="on-oxblood bg-oxblood-deep px-4 py-8 text-center sm:px-6">
+      <p class="text-sm text-sandalwood/70">
+        &copy; {new Date().getFullYear()} {site.name}
+      </p>
+    </footer>
+  </body>
+</html>

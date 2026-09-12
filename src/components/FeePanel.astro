@@ -1,0 +1,23 @@
+---
+/**
+ * Deliberately not the rounded-shadow card pattern (brief section 4):
+ * flat colour, hairline border, ~2px radius, no box-shadow. The two
+ * variants use different hues so they read as different tracks, not a
+ * repeated template — brief section 4's peacock/oxblood separation.
+ */
+interface Props {
+  variant: "online" | "in-person";
+  class?: string;
+  id?: string;
+}
+const { variant, class: className = "", id } = Astro.props;
+
+const variants = {
+  online: "on-oxblood border border-gold/60 bg-oxblood",
+  "in-person": "border border-peacock-light/60 bg-peacock text-sandalwood",
+};
+---
+
+<div id={id} class={`rounded-sm p-8 sm:p-10 ${variants[variant]} ${className}`}>
+  <slot />
+</div>

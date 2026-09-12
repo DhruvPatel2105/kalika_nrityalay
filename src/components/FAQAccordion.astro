@@ -1,0 +1,40 @@
+---
+/**
+ * Native <details>/<summary> — zero JS, per brief section 3.
+ */
+import { faqs, type FaqItem } from "@/content/faq";
+
+interface Props {
+  page: FaqItem["page"];
+}
+const { page } = Astro.props;
+const items = faqs.filter((faq) => faq.page === page);
+---
+
+{
+  items.length > 0 && (
+    <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-2xl">
+        <h2 class="font-display text-3xl text-oxblood">
+          Questions parents ask
+        </h2>
+        <div class="mt-8 divide-y divide-oxblood/15 border-y border-oxblood/15">
+          {items.map((faq) => (
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg text-oxblood marker:content-none">
+                {faq.question}
+                <span
+                  class="shrink-0 text-2xl text-gold transition-transform group-open:rotate-45"
+                  aria-hidden="true"
+                >
+                  +
+                </span>
+              </summary>
+              <p class="measure mt-3 text-base text-ink/80">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,66 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import CurriculumLevel from "@/components/CurriculumLevel.astro";
+import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import TrialCTA from "@/components/TrialCTA.astro";
+import { site } from "@/content/site";
+
+const yearOne = [
+  {
+    title: "Aramandi",
+    body: "The grounded, turned-out half-seated stance that underlies almost every Bharatanatyam movement — the first thing every student learns, and the thing a trained eye checks first.",
+  },
+  {
+    title: "The first adavus",
+    body: "The basic units of movement that combine, later, into full choreography. Built slowly, with correct footwork and rhythm before speed.",
+  },
+  {
+    title: "Hastas",
+    body: "The vocabulary of hand gestures used throughout the dance, learned individually before they're combined with movement and expression.",
+  },
+  {
+    title: "Basic theory",
+    body: "The rhythmic and structural fundamentals underneath the movement — taught alongside the physical practice, not as an afterthought.",
+  },
+];
+---
+
+<Layout
+  title={`Curriculum — ${site.name}`}
+  description="The graded Bharatanatyam path at Kalika Nrityalay, starting with aramandi, the first adavus, hastas, and basic theory."
+>
+  <main>
+    <PageIntro
+      title="The graded path"
+      intro="Bharatanatyam is taught through a graded examination system — Prarambhik, Praveshika, Madhyama, and Visharad, followed by Alankar. It typically takes years to move through. Here is where every student begins."
+    />
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto max-w-2xl">
+        <h2 class="font-display text-2xl text-oxblood">Year one</h2>
+        <ul class="mt-4">
+          {
+            yearOne.map((level, i) => (
+              <CurriculumLevel index={i + 1} title={level.title}>
+                {level.body}
+              </CurriculumLevel>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto grid max-w-2xl grid-cols-2 gap-4">
+        <PlaceholderImage id="hasta-detail" class="aspect-square" />
+        <PlaceholderImage id="feet-adavu" class="aspect-square" />
+      </div>
+    </section>
+
+    <TrialCTA
+      heading="Start at the foundation."
+      body="Book a free trial class and see how Year One begins."
+    />
+  </main>
+</Layout>

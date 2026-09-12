@@ -1,0 +1,70 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import Arch from "@/components/Arch.astro";
+import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import FAQAccordion from "@/components/FAQAccordion.astro";
+import TrialCTA from "@/components/TrialCTA.astro";
+import { site } from "@/content/site";
+---
+
+<Layout
+  title={`Online classes for USA & Canada — ${site.name}`}
+  description="Live weekend Bharatanatyam classes for children in the USA and Canada, small batches, recorded on Zoom for makeup."
+>
+  <main>
+    <PageIntro
+      title="Online, for the USA & Canada"
+      intro={`Batches of ${site.capacity.minStudentsPerBatch}–${site.capacity.maxStudentsPerBatch}, taught live by Binni herself.`}
+    />
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto grid max-w-4xl gap-10 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] sm:items-start">
+        <div class="measure order-2 sm:order-1">
+          <h2 class="font-display text-2xl text-oxblood">
+            What a class looks like
+          </h2>
+          <p class="mt-4 text-lg text-ink">
+            Classes run live on Zoom, twice a week, in small batches of{" "}
+            {site.capacity.minStudentsPerBatch}–{
+              site.capacity.maxStudentsPerBatch
+            }{" "}
+            students. Every session is recorded, so a missed class can be
+            caught up.
+          </p>
+          <h2 class="mt-8 font-display text-2xl text-oxblood">
+            What you'll need at home
+          </h2>
+          <ul class="mt-4 list-disc space-y-2 pl-5 text-lg text-ink">
+            <li>A clear floor space, about 2m by 2m</li>
+            <li>A laptop or tablet</li>
+            <li>No mirror required</li>
+          </ul>
+        </div>
+
+        <Arch
+          id="classes-teaching"
+          aspectRatio="4/3"
+          class="order-1 w-full sm:order-2"
+        >
+          <PlaceholderImage id="binni-teaching" />
+        </Arch>
+      </div>
+    </section>
+
+    <section class="bg-peacock px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-2xl text-sandalwood">
+        <h2 class="font-display text-2xl">A note on safety</h2>
+        <p class="mt-4 text-lg">
+          Classes are recorded. A parent is welcome in the room at any time.
+          Binni communicates with parents, never directly with students
+          under 18.
+        </p>
+      </div>
+    </section>
+
+    <FAQAccordion page="classes" />
+
+    <TrialCTA />
+  </main>
+</Layout>

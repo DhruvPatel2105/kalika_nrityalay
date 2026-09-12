@@ -1,0 +1,41 @@
+---
+/**
+ * "Why a teacher in India" — brief section 6: "Three points, in the
+ * torana frame, not cards." Hairline dividers and a small arch mark
+ * per item, deliberately not a rounded-shadow card grid.
+ */
+const reasons = [
+  {
+    title: "Small batches.",
+    body: "Six to eight students. Binni teaches every class herself — there are no assistant teachers and no recorded-video “courses.”",
+  },
+  {
+    title: "A real lineage.",
+    body: "Pandanallur is the tradition Kalakshetra itself was derived from. Most North American schools teach Kalakshetra style; this is the older root.",
+  },
+  {
+    title: "Saturday and Sunday mornings, your time.",
+    body: "No weeknight scramble after school.",
+  },
+];
+---
+
+<section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="text-center font-display text-3xl text-oxblood">
+      Why a teacher in India
+    </h2>
+    <ul
+      class="mt-10 grid gap-10 border-t border-oxblood/15 pt-10 sm:grid-cols-3 sm:gap-8 sm:border-t-0 sm:pt-0"
+    >
+      {
+        reasons.map((reason) => (
+          <li class="border-t border-oxblood/15 pt-8 first:border-t-0 first:pt-0 sm:border-t-0 sm:border-l-2 sm:border-gold/50 sm:pt-0 sm:pl-6 sm:first:border-l-2">
+            <p class="font-display text-xl text-oxblood">{reason.title}</p>
+            <p class="mt-2 text-base text-ink/80">{reason.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

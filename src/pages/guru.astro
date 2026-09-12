@@ -1,0 +1,70 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import Arch from "@/components/Arch.astro";
+import PlaceholderImage from "@/components/PlaceholderImage.astro";
+import TrialCTA from "@/components/TrialCTA.astro";
+import { site } from "@/content/site";
+
+const g = site.guru;
+---
+
+<Layout
+  title={`Binni Patel — ${site.name}`}
+  description={`Trained under Ananth Menon at Mudra School, Binni Patel holds ${g.credential} in the Pandanallur tradition.`}
+>
+  <main>
+    <PageIntro title="Binni Patel" />
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto grid max-w-4xl gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:items-start">
+        <Arch id="guru-portrait" aspectRatio="4/5" class="mx-auto w-full max-w-xs">
+          <PlaceholderImage id="binni-portrait" />
+        </Arch>
+
+        <div class="measure">
+          <p class="text-lg text-ink">
+            Binni Patel trained at the {g.school.name}, {g.school.city},
+            founded in {g.school.foundedYear} by Gurus {g.school.founders[0]}
+            {" "}and {g.school.founders[1]}. The school teaches Bharatanatyam
+            in the Pandanallur style and has trained roughly{" "}
+            {g.school.approxStudentsTrained.toLocaleString()} students. Her
+            direct guru was {g.trainedUnder}.
+          </p>
+          <p class="mt-5 text-lg text-ink">
+            Binni completed {g.credential} in {g.credentialAwardedMonth}{" "}
+            {g.credentialAwardedYear} and opened {site.name} the following
+            month, in {site.founded.month} {site.founded.year}.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-oxblood-deep px-4 py-14 sm:px-6 sm:py-20">
+      <div class="on-oxblood mx-auto max-w-2xl border-l-4 border-gold pl-6 sm:pl-10">
+        <h2 class="font-display text-2xl">What is Alankar?</h2>
+        <p class="mt-4 text-base">
+          Indian classical dance uses a graded examination system. Students
+          progress through Prarambhik, Praveshika, Madhyama, and Visharad
+          &mdash; which is equivalent to a bachelor's degree and typically
+          takes seven years &mdash; before reaching Alankar, the
+          post-graduate or Master's-equivalent level. Binni holds{" "}
+          {g.credential}, examined by the {g.credentialAwardingBody}.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto grid max-w-3xl grid-cols-3 gap-4">
+        <PlaceholderImage id="detail-salangai" class="aspect-square" />
+        <PlaceholderImage id="detail-diya" class="aspect-square" />
+        <PlaceholderImage id="detail-doorway" class="aspect-square" />
+      </div>
+    </section>
+
+    <TrialCTA
+      heading="Learn from the source."
+      body="Book a free trial and see the Pandanallur foundation for yourself."
+    />
+  </main>
+</Layout>

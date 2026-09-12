@@ -1,0 +1,76 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import FeePanel from "@/components/FeePanel.astro";
+import Button from "@/components/Button.astro";
+import FAQAccordion from "@/components/FAQAccordion.astro";
+import { site } from "@/content/site";
+
+const online = site.pricing.online;
+const inPerson = site.pricing.inPerson;
+const whatsappHref = `https://wa.me/${site.contact.whatsapp.digitsOnly}`;
+---
+
+<Layout
+  title={`Fees — ${site.name}`}
+  description={`$${online.monthly}/month for online Bharatanatyam classes, two sessions a week. First trial class free.`}
+>
+  <main>
+    <PageIntro title="Fees" />
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
+        <FeePanel variant="online">
+          <p class="font-display text-xl text-gold-light">
+            Online — USA & Canada
+          </p>
+          <p class="mt-4 font-display text-4xl">${online.monthly}<span class="text-lg font-normal">/month</span></p>
+          <ul class="mt-4 space-y-1 text-base text-sandalwood/90">
+            <li>{online.classesPerWeek} group classes per week</li>
+            <li>
+              Batches of {site.capacity.minStudentsPerBatch}–{
+                site.capacity.maxStudentsPerBatch
+              } students
+            </li>
+            <li>Quarterly: ${online.quarterly} (save {online.quarterlySavingsPercent}%)</li>
+            <li>First trial class free. No registration fee.</li>
+          </ul>
+          <Button href="/trial" variant="gold" class="mt-6 w-full"
+            >Book a free trial class</Button
+          >
+        </FeePanel>
+
+        <FeePanel variant="in-person" class="scroll-mt-24" id="in-person">
+          <p class="font-display text-xl">In-person — {site.location.area}, {site.location.city}</p>
+          {
+            inPerson.monthly !== null ? (
+              <p class="mt-4 font-display text-4xl">
+                ₹{inPerson.monthly}
+                <span class="text-lg font-normal">/month</span>
+              </p>
+            ) : (
+              <p class="mt-4 text-base">
+                In-person pricing is confirmed directly — message us on
+                WhatsApp for the current rate.
+              </p>
+            )
+          }
+          <ul class="mt-4 space-y-1 text-base">
+            <li>
+              {site.credibility.inPersonStudentCount} students currently
+              learning at the studio
+            </li>
+          </ul>
+          <Button
+            href={whatsappHref}
+            variant="peacock-outline"
+            class="mt-6 w-full border-sandalwood text-sandalwood hover:bg-sandalwood/10"
+            >Message us on WhatsApp</Button
+          >
+        </FeePanel>
+      </div>
+    </section>
+
+    <FAQAccordion page="fees" />
+  </main>
+</Layout>
