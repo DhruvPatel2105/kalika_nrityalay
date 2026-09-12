@@ -5,7 +5,7 @@
  */
 interface Props {
   href: string;
-  variant?: "gold" | "peacock-outline";
+  variant?: "gold" | "peacock-outline" | "peacock-outline-light";
   class?: string;
 }
 
@@ -16,8 +16,13 @@ const base =
 
 const variants = {
   gold: "bg-gold text-oxblood-deep hover:bg-gold-light",
+  // For use on dark (oxblood/peacock) surfaces.
   "peacock-outline":
     "border-2 border-peacock-light text-sandalwood hover:bg-peacock-light/10",
+  // For use on light (sandalwood) surfaces — same track colour, AA-safe
+  // contrast on a light ground instead.
+  "peacock-outline-light":
+    "border-2 border-peacock text-peacock hover:bg-peacock/10",
 };
 ---
 

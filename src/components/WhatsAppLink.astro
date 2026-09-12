@@ -1,0 +1,17 @@
+---
+import { site } from "@/content/site";
+
+interface Props {
+  message?: string;
+  class?: string;
+}
+const { message = "", class: className = "" } = Astro.props;
+
+const href = message
+  ? `https://wa.me/${site.contact.whatsapp.digitsOnly}?text=${encodeURIComponent(message)}`
+  : `https://wa.me/${site.contact.whatsapp.digitsOnly}`;
+---
+
+<a href={href} class={className} target="_blank" rel="noopener noreferrer">
+  <slot />
+</a>
