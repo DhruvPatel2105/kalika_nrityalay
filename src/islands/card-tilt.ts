@@ -9,6 +9,7 @@ const MAX_TILT_DEG = 4;
 
 export function initCardTilt(el: HTMLElement) {
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   el.style.perspective = "1000px";
 
