@@ -2,20 +2,43 @@
 /**
  * Server-rendered in IST — brief section 7: "Must render server-side
  * with IST as the default so there is no layout shift when the client
- * script upgrades it." The timezone converter island (step 4) enhances
- * this same markup in place; it does not replace it.
+ * script upgrades it." The primary and secondary lines are always
+ * present in the markup; the island only ever swaps their text.
  */
 import { batches } from "@/content/schedule";
 import { formatISTTime } from "@/lib/time";
+import { TIMEZONE_OPTIONS } from "@/islands/timezone-converter";
 ---
 
 <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
   <div class="mx-auto max-w-2xl">
-    <h2 class="font-display text-3xl text-oxblood">Class schedule</h2>
-    <p class="measure mt-3 text-base text-ink/80">
-      Times below are shown in India Standard Time. A converter for your
-      local time is on its way.
-    </p>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="font-display text-3xl text-oxblood">Class schedule</h2>
+        <p class="mt-2 text-base text-ink/80">
+          Shown in your local time automatically. The India time is noted
+          underneath.
+        </p>
+      </div>
+
+      <div>
+        <label
+          for="timezone-select"
+          class="block text-sm font-medium text-ink/70">Timezone</label
+        >
+        <select
+          id="timezone-select"
+          data-timezone-select
+          class="mt-1 border border-oxblood/30 bg-white px-3 py-2 text-base text-ink"
+        >
+          {
+            TIMEZONE_OPTIONS.map((tz) => (
+              <option value={tz.value}>{tz.label}</option>
+            ))
+          }
+        </select>
+      </div>
+    </div>
 
     <ul class="mt-8 space-y-4">
       {
@@ -24,10 +47,26 @@ import { formatISTTime } from "@/lib/time";
             <p class="font-display text-xl text-oxblood">
               {batch.name}, ages {batch.ageRange.min}–{batch.ageRange.max}
             </p>
-            <p class="mt-2 text-base text-ink/80">
-              {batch.days.join(" & ")}, {formatISTTime(batch.startIST)}–{formatISTTime(batch.endIST)} IST
-            </p>
-            <p class="mt-1 text-sm text-ink/60">
+            <div class="mt-3 space-y-3">
+              {batch.days.map((day) => (
+                <div
+                  data-schedule-row
+                  data-day={day}
+                  data-start-ist={batch.startIST}
+                  data-end-ist={batch.endIST}
+                >
+                  <p data-primary-line class="text-base text-ink">
+                    {day}s, {formatISTTime(batch.startIST)}–
+                    {formatISTTime(batch.endIST)} IST
+                  </p>
+                  <p
+                    data-secondary-line
+                    class="mt-0.5 min-h-[1.25em] text-sm text-ink/60"
+                  />
+                </div>
+              ))}
+            </div>
+            <p class="mt-3 text-sm text-ink/60">
               {batch.seatsRemaining} seats remaining
             </p>
           </li>
@@ -36,3 +75,8 @@ import { formatISTTime } from "@/lib/time";
     </ul>
   </div>
 </section>
+
+<script>
+  import { initTimezoneConverter } from "@/islands/timezone-converter";
+  initTimezoneConverter(document);
+</script>

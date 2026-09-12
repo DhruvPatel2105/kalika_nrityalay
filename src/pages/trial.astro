@@ -1,8 +1,10 @@
 ---
 import TrialLayout from "@/layouts/TrialLayout.astro";
-import { batches } from "@/content/schedule";
+import { scheduleRows } from "@/lib/schedule";
 import { formatISTTime } from "@/lib/time";
 import { site } from "@/content/site";
+
+const rows = scheduleRows();
 ---
 
 <TrialLayout
@@ -121,22 +123,27 @@ import { site } from "@/content/site";
           <select
             id="preferred-slot"
             name="preferred-slot"
+            data-slot-select
             required
             class="mt-2 w-full border border-oxblood/30 bg-white px-4 py-3 text-base text-ink focus-visible:border-oxblood"
           >
             {
-              batches.map((batch) => (
-                <option value={batch.id}>
-                  {batch.name} — {batch.days.join(" & ")},{" "}
-                  {formatISTTime(batch.startIST)}–{formatISTTime(batch.endIST)}{" "}
-                  IST
+              rows.map((row) => (
+                <option
+                  value={`${row.batchId}-${row.day}`}
+                  data-day={row.day}
+                  data-start-ist={row.startIST}
+                  data-end-ist={row.endIST}
+                  data-label={row.batchName}
+                >
+                  {row.batchName} — {row.day}s, {formatISTTime(row.startIST)}–
+                  {formatISTTime(row.endIST)} IST
                 </option>
               ))
             }
           </select>
           <p class="mt-1 text-sm text-ink/60">
-            Shown in India Standard Time — a local-time converter is on its
-            way.
+            Shown in your local time automatically once the page loads.
           </p>
         </div>
 
@@ -154,3 +161,9 @@ import { site } from "@/content/site";
     </div>
   </main>
 </TrialLayout>
+
+<script>
+  import { enhanceSlotOptions } from "@/islands/timezone-converter";
+  const select = document.querySelector<HTMLSelectElement>("[data-slot-select]");
+  if (select) enhanceSlotOptions(select);
+</script>
