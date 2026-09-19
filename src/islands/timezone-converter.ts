@@ -94,28 +94,6 @@ function convertRow(row: HTMLElement, timeZone: string) {
   secondary.textContent = `${day} ${startIST.replace(/^0/, "")}–${endIST.replace(/^0/, "")} IST`;
 }
 
-/** Rewrites a <select>'s option labels from IST to the detected local
- * time — used on the trial form's "preferred slot" field. Each
- * <option> carries data-day/data-start-ist/data-end-ist. */
-export function enhanceSlotOptions(select: HTMLSelectElement) {
-  const timeZone = detectTimeZone();
-  if (timeZone === "Asia/Kolkata") return;
-
-  Array.from(select.options).forEach((option) => {
-    const { day, startIst, endIst, label } = option.dataset;
-    if (!day || !startIst || !endIst || !label) return;
-    const [startH, startM] = startIst.split(":").map(Number);
-    const [endH, endM] = endIst.split(":").map(Number);
-    const startLocal = formatLocal(nextISTOccurrenceUTC(day, startH, startM), timeZone);
-    const endLocal = formatLocal(nextISTOccurrenceUTC(day, endH, endM), timeZone);
-    const sameDay = startLocal.day === endLocal.day;
-    const when = sameDay
-      ? `${startLocal.day}s, ${startLocal.time}–${endLocal.time}`
-      : `${startLocal.day} ${startLocal.time} – ${endLocal.day} ${endLocal.time}`;
-    option.textContent = `${label} — ${when} (your time)`;
-  });
-}
-
 export function initTimezoneConverter(root: ParentNode) {
   const select = root.querySelector<HTMLSelectElement>("[data-timezone-select]");
   const rows = Array.from(

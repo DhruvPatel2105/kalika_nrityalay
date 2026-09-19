@@ -43,7 +43,7 @@ export const faqs: FaqItem[] = [
   {
     id: "registration-fee",
     question: "Is there a registration fee?",
-    answer: "No registration fee, and the first trial class is free.",
+    answer: "No registration fee, and the first two classes are free.",
     page: "fees",
   },
   {
@@ -57,12 +57,12 @@ export const faqs: FaqItem[] = [
     id: "child-info-collected",
     question: "What information do you need about my child?",
     answer:
-      "Just her age. We don't collect her name, photo, or school on the trial form — only a parent's contact details.",
+      "Just her age. We don't collect her name, photo, or school on the form — only a parent's contact details.",
     page: "trial",
   },
   {
     id: "trial-response-time",
-    question: "How soon will I hear back after booking a trial?",
+    question: "How soon will I hear back after I request classes?",
     answer:
       "Binni replies on WhatsApp within 24 hours. If you'd rather skip the form, you can message her directly.",
     page: "trial",

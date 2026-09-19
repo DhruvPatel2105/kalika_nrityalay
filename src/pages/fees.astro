@@ -15,9 +15,9 @@ const feesSchema = [faqPageSchema("fees")].filter(Boolean);
 
 <Layout
   title={`Fees — Online Classes & ${site.location.area} Studio — ${site.name}`}
-  description={`$${online.monthly}/month for online Bharatanatyam classes, two sessions a week. First trial class free. In-person fees for the ${site.location.area} studio also listed.`}
+  description={`$${online.monthly}/month for online Bharatanatyam classes, two sessions a week. First two classes free. In-person fees for the ${site.location.area} studio also listed.`}
   ogTitle="Bharatanatyam Class Fees"
-  ogDescription={`$${online.monthly}/month online, two classes a week. First trial class free, no registration fee.`}
+  ogDescription={`$${online.monthly}/month online, two classes a week. First two classes free, no registration fee.`}
   schema={feesSchema}
 >
   <main>
@@ -38,10 +38,10 @@ const feesSchema = [faqPageSchema("fees")].filter(Boolean);
               } students
             </li>
             <li>Quarterly: ${online.quarterly} (save {online.quarterlySavingsPercent}%)</li>
-            <li>First trial class free. No registration fee.</li>
+            <li>First two classes free. No registration fee.</li>
           </ul>
           <Button href="/trial" variant="gold" class="mt-6 w-full"
-            >Book a free trial class</Button
+            >Book your free classes</Button
           >
         </FeePanel>
 

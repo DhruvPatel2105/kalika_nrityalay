@@ -7,7 +7,7 @@ interface Props {
 }
 const {
   heading = "See if it's the right fit.",
-  body = "The first trial class is free, with no registration fee.",
+  body = "Your first two classes are free, with no registration fee.",
 } = Astro.props;
 ---
 
@@ -16,7 +16,7 @@ const {
     <h2 class="font-display text-3xl sm:text-4xl">{heading}</h2>
     <p class="mt-3 text-base text-sandalwood/90">{body}</p>
     <div class="mt-8 flex justify-center">
-      <Button href="/trial" variant="gold">Book a free trial class</Button>
+      <Button href="/trial" variant="gold">Book your free classes</Button>
     </div>
   </div>
 </section>

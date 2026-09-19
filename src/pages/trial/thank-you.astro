@@ -4,12 +4,12 @@ import WhatsAppLink from "@/components/WhatsAppLink.astro";
 import Button from "@/components/Button.astro";
 import { site } from "@/content/site";
 
-const whatsappMessage = `Hi Binni, I just submitted a trial class request on the website.`;
+const whatsappMessage = `Hi Binni, I just requested my daughter's free classes on the website.`;
 ---
 
 <TrialLayout
   title={`Request received — ${site.name}`}
-  description="Your free trial class request has been received. Binni will reply on WhatsApp within 24 hours."
+  description="Your request for two free classes has been received. Binni will reply on WhatsApp within 24 hours."
   noindex
 >
   <main class="px-4 py-16 text-center sm:px-6 sm:py-24">
@@ -18,9 +18,9 @@ const whatsappMessage = `Hi Binni, I just submitted a trial class request on the
         Thank you — we've got your request.
       </h1>
       <p class="measure mx-auto mt-4 text-lg text-ink/80">
-        Binni will reply on WhatsApp within 24 hours to confirm your trial
-        slot. If you'd rather not wait, message her directly and mention
-        that you just filled in the form.
+        Binni will reply on WhatsApp within 24 hours to confirm a time
+        around your preference. If you'd rather not wait, message her
+        directly and mention that you just filled in the form.
       </p>
 
       <div class="mt-8 flex flex-col items-center gap-3">

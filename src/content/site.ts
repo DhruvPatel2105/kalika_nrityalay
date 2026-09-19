@@ -85,7 +85,9 @@ export const site = {
       quarterly: 297,
       quarterlySavingsPercent: 10,
       classesPerWeek: 2,
-      trialIsFree: true,
+      // Every new student's first two classes are free (previously one
+      // free trial class — updated per client request).
+      freeClasses: 2,
       registrationFee: 0,
     },
     inPerson: {
