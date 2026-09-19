@@ -25,9 +25,9 @@ import { site } from "@/content/site";
         <HeroParallax />
 
         <div
-          class="on-oxblood hero-copy-rise border-x-2 border-b-2 border-gold bg-oxblood-deep px-8 py-8 sm:px-12 sm:py-10"
+          class="on-oxblood hero-copy-rise border-x-2 border-b-2 border-gold bg-oxblood-deep px-6 py-8 sm:px-12 sm:py-10"
         >
-          <h1 class="font-display text-4xl sm:text-5xl">
+          <h1 class="font-display hero-title sm:text-5xl">
             Learn Bharatanatyam from Ahmedabad.
           </h1>
           <p class="measure mt-4 text-base">
@@ -56,6 +56,18 @@ import { site } from "@/content/site";
 </Layout>
 
 <style>
+  /* Fluid mobile size for the hero h1 — "Bharatanatyam" is long enough
+     that the fixed text-4xl step overflowed its padded box on most
+     real phone widths (~320-450px). Scales smoothly with viewport
+     instead of jumping, and lands exactly on --text-5xl's mobile
+     value at the sm breakpoint so there's no visible jump handing off
+     to the sm:text-5xl utility. */
+  @media (max-width: 639.98px) {
+    .hero-title {
+      font-size: clamp(1.75rem, 11vw - 0.65rem, 4.0625rem);
+    }
+  }
+
   /* Final beat of the hero's one orchestrated entrance (brief section
      5) — the headline/copy panel rises in after the arch and photo. */
   .hero-copy-rise {
