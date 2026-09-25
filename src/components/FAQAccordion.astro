@@ -20,8 +20,8 @@ const items = faqs.filter((faq) => faq.page === page);
         </h2>
         <div class="mt-8 divide-y divide-oxblood/15 border-y border-oxblood/15">
           {items.map((faq) => (
-            <details class="group py-5">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg text-oxblood marker:content-none">
+            <details class="group py-2">
+              <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-3 font-display text-lg text-oxblood marker:content-none">
                 {faq.question}
                 <span
                   class="shrink-0 text-2xl text-gold transition-transform group-open:rotate-45"
