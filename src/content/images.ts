@@ -70,7 +70,7 @@ export const images: ImageSlot[] = [
   },
   {
     id: "feet-adavu",
-    alt: "Illustration of feet in Bharatanatyam costume with beaded salangai (ankle bells), traced from a student's sketchbook drawing.",
+    alt: "Illustration of feet in Bharatanatyam costume with beaded salangai (ankle bells).",
     aspectRatio: "990:819",
     width: 990,
     height: 819,
