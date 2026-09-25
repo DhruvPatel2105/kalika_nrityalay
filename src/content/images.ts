@@ -27,9 +27,9 @@ export const images: ImageSlot[] = [
   {
     id: "hero-binni-aramandi",
     alt: "Binni Patel captured mid-jump, one arm raised overhead and one leg bent up behind her.",
-    aspectRatio: "396:1083",
+    aspectRatio: "396:1245",
     width: 396,
-    height: 1083,
+    height: 1245,
     focalPoint: "center",
     pages: ["/"],
     status: "final",
