@@ -2,8 +2,10 @@
 import Layout from "@/layouts/Layout.astro";
 import HeroParallax from "@/components/HeroParallax.astro";
 import Button from "@/components/Button.astro";
+import SiteImage from "@/components/SiteImage.astro";
 import CredibilityBand from "@/components/CredibilityBand.astro";
 import JaaliTexture from "@/components/JaaliTexture.astro";
+import AramandiDivider from "@/components/AramandiDivider.astro";
 import ReasonsTorana from "@/components/ReasonsTorana.astro";
 import ScheduleList from "@/components/ScheduleList.astro";
 import HonestSection from "@/components/HonestSection.astro";
@@ -21,14 +23,45 @@ import { site } from "@/content/site";
   <main>
     <section class="relative overflow-hidden bg-oxblood px-4 py-10 sm:px-6 sm:py-16">
       <JaaliTexture />
-      <div class="relative z-10 mx-auto max-w-xl">
-        <HeroParallax />
+      <div class="relative z-10 mx-auto max-w-xl sm:max-w-2xl lg:max-w-4xl">
+        <div class="relative">
+          <HeroParallax />
 
+          <!-- ≥640px: headline lives in the cleared left third of the
+               photo itself. Positioned below the arch's dome curve
+               (y>=42%) and left of Binni's figure at every row below
+               that point — both measured against the actual photo,
+               not guessed. -->
+          <div
+            class="on-oxblood hero-overlay-copy pointer-events-none absolute top-[43%] left-[6%] hidden w-[50%] flex-col sm:flex"
+          >
+            <h1 class="font-display hero-overlay-title text-balance">
+              Learn Bharatanatyam<br />from Ahmedabad.
+            </h1>
+            <p class="mt-4 text-base">
+              Live weekend classes for children in the USA and Canada,
+              taught by a Master's-qualified guru in the Pandanallur
+              tradition.
+            </p>
+            <div class="pointer-events-auto mt-6 flex flex-col gap-3">
+              <Button href="/trial" variant="gold"
+                >Book your free classes</Button
+              >
+              <Button href="/fees#in-person" variant="peacock-outline"
+                >I'm in Ahmedabad — see local classes</Button
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- <640px: the same photo, full width, no overlay — the
+             headline sits below in its own panel. This is the
+             existing, overflow-tested mobile layout. -->
         <div
-          class="on-oxblood hero-copy-rise border-x-2 border-b-2 border-gold bg-oxblood-deep px-6 py-8 sm:px-12 sm:py-10"
+          class="on-oxblood hero-copy-rise flex flex-col border-x-2 border-b-2 border-gold bg-oxblood-deep px-6 py-8 sm:hidden"
         >
-          <h1 class="font-display hero-title sm:text-5xl">
-            Learn Bharatanatyam from Ahmedabad.
+          <h1 class="font-display hero-title">
+            Learn Bharatanatyam<br />from Ahmedabad.
           </h1>
           <p class="measure mt-4 text-base">
             Live weekend classes for children in the USA and Canada, taught
@@ -47,7 +80,35 @@ import { site } from "@/content/site";
       </div>
     </section>
 
+    <!-- Social proof, directly below the hero: who teaches my daughter
+         (hero) -> this is a real school with real students (here). The
+         royal-blue costumes clash against oxblood, so this section gets
+         its own neutral ink ground rather than reusing peacock (which
+         already means "the local Ahmedabad track" elsewhere on this
+         site) or oxblood (which clashes outright). -->
+    <section
+      class="on-oxblood bg-ink px-4 py-14 text-center sm:px-6 sm:py-20"
+      style="padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));"
+    >
+      <h2 class="font-display text-2xl text-gold-light sm:text-3xl">
+        A real school. Real students.
+      </h2>
+      <p class="mx-auto mt-3 max-w-md text-base text-sandalwood/85">
+        Sixteen students and their teacher, Vastral, Ahmedabad.
+      </p>
+      <div class="mx-auto mt-8 max-w-5xl">
+        <SiteImage
+          id="group-sixteen"
+          class="aspect-[1600/848] w-full"
+          sizes="(min-width: 1024px) 1024px, 100vw"
+        />
+      </div>
+    </section>
+
     <CredibilityBand />
+
+    <AramandiDivider caption="Pandanallur bani — geometry you can see." />
+
     <ReasonsTorana />
     <ScheduleList />
     <HonestSection />
@@ -56,26 +117,37 @@ import { site } from "@/content/site";
 </Layout>
 
 <style>
-  /* Fluid mobile size for the hero h1 — "Bharatanatyam" is long enough
-     that the fixed text-4xl step overflowed its padded box on most
-     real phone widths (~320-450px). Scales smoothly with viewport
-     instead of jumping, and lands exactly on --text-5xl's mobile
-     value at the sm breakpoint so there's no visible jump handing off
-     to the sm:text-5xl utility. */
+  /* Fluid mobile size for the stacked hero h1 — "Bharatanatyam" is long
+     enough that a fixed text-4xl step overflowed its padded box on
+     most real phone widths (~320-450px), measured and fixed earlier.
+     Scales smoothly with viewport and lands on --text-5xl's mobile
+     value at the sm handoff. */
   @media (max-width: 639.98px) {
     .hero-title {
       font-size: clamp(1.75rem, 11vw - 0.65rem, 4.0625rem);
     }
   }
 
+  /* Overlay headline (>=640px) — sized against the arch's own ~50%-
+     width left column, not the generic type scale. Tuned so the
+     manual line break's first line ("Learn Bharatanatyam") fits the
+     column at every width from 640px up; verified in-browser. */
+  .hero-overlay-title {
+    font-size: clamp(1.5rem, 4vw + 0.5rem, 3.25rem);
+    line-height: 1.05;
+  }
+
   /* Final beat of the hero's one orchestrated entrance (brief section
-     5) — the headline/copy panel rises in after the arch and photo. */
-  .hero-copy-rise {
+     5) — the headline/copy rises in after the arch and photo, in
+     whichever variant is visible at the current breakpoint. */
+  .hero-copy-rise,
+  .hero-overlay-copy {
     opacity: 1;
     transform: none;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .hero-copy-rise {
+    .hero-copy-rise,
+    .hero-overlay-copy {
       animation: copy-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       animation-delay: 0.9s;
       opacity: 0;
