@@ -13,9 +13,10 @@
     "astro": "^5.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.2.4",
-    "tailwindcss": "4.2.4",
     "@astrojs/check": "^0.9.4",
+    "@tailwindcss/vite": "4.2.4",
+    "potrace": "^2.1.8",
+    "tailwindcss": "4.2.4",
     "typescript": "^5.7.2"
   }
 }

@@ -1,0 +1,23 @@
+---
+/**
+ * Very-low-opacity background watermark, one traced figure — used
+ * sparingly (not layered everywhere jaali already is) on sections
+ * specifically about technique or lineage. Absolutely positioned;
+ * place inside a `relative` section with content above it at z-10.
+ */
+import { figure3 } from "@/lib/ornament";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  viewBox={`0 0 ${figure3.width} ${figure3.height}`}
+  preserveAspectRatio="xMidYMax slice"
+  class={`pointer-events-none absolute inset-0 h-full w-full opacity-[0.035] ${className}`}
+  aria-hidden="true"
+>
+  <path d={figure3.d} fill="var(--color-gold-light)" />
+</svg>

@@ -1,0 +1,31 @@
+---
+/**
+ * One traced dancer silhouette (BRIEF.md design-elevation pass, item C)
+ * — real geometry from a real student in true aramandi, not stock
+ * clip-art. Used as a small section mark and as the favicon source.
+ */
+import { figure1, figure3 } from "@/lib/ornament";
+
+interface Props {
+  variant?: "fill" | "outline";
+  figure?: "a" | "b";
+  class?: string;
+}
+
+const { variant = "fill", figure = "a", class: className = "" } = Astro.props;
+const f = figure === "a" ? figure1 : figure3;
+---
+
+<svg
+  viewBox={`0 0 ${f.width} ${f.height}`}
+  class={className}
+  aria-hidden="true"
+>
+  {
+    variant === "fill" ? (
+      <path d={f.d} fill="var(--color-gold)" />
+    ) : (
+      <path d={f.d} fill="none" stroke="var(--color-gold)" stroke-width="4" />
+    )
+  }
+</svg>

@@ -1,0 +1,60 @@
+---
+/**
+ * Full-width ornamental divider — the real aramandi row (BRIEF.md
+ * design-elevation pass, item C), traced from six actual students in
+ * correct, symmetric aramandi. This is the "geometry you can see"
+ * claim, now made honestly: the AramandiGeometryOverlay it replaces
+ * was guessing at a pose the hero photo doesn't show.
+ */
+import { rowFigures } from "@/lib/ornament";
+
+interface Props {
+  caption?: string;
+  class?: string;
+}
+const { caption, class: className = "" } = Astro.props;
+
+// Lay the 4 clusters out left-to-right at a shared height, spaced by
+// their own natural widths (already proportioned from the source photo).
+const H = 140;
+const GAP = 28;
+let cursor = 0;
+const placed = rowFigures.map((f) => {
+  const w = (f.width / f.height) * H;
+  const x = cursor;
+  cursor += w + GAP;
+  return { f, x, w };
+});
+const totalW = cursor - GAP;
+---
+
+<div class={`bg-oxblood-deep py-8 ${className}`}>
+  <svg
+    viewBox={`0 0 ${totalW} ${H}`}
+    preserveAspectRatio="xMidYMid meet"
+    class="mx-auto h-24 w-full max-w-3xl px-4 sm:h-32 lg:h-40 lg:max-w-4xl"
+    aria-hidden="true"
+  >
+    {
+      placed.map(({ f, x, w }) => (
+        <svg
+          x={x}
+          y="0"
+          width={w}
+          height={H}
+          viewBox={`0 0 ${f.width} ${f.height}`}
+          preserveAspectRatio="xMidYMax meet"
+        >
+          <path d={f.d} fill="var(--color-gold)" opacity="0.85" />
+        </svg>
+      ))
+    }
+  </svg>
+  {
+    caption && (
+      <p class="mt-3 text-center font-display text-sm text-gold-light italic">
+        {caption}
+      </p>
+    )
+  }
+</div>
