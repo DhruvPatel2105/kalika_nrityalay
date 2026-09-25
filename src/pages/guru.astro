@@ -4,6 +4,7 @@ import PageIntro from "@/components/PageIntro.astro";
 import Arch from "@/components/Arch.astro";
 import SiteImage from "@/components/SiteImage.astro";
 import TrialCTA from "@/components/TrialCTA.astro";
+import AramandiWatermark from "@/components/AramandiWatermark.astro";
 import { site } from "@/content/site";
 import { personSchema } from "@/lib/schema";
 
@@ -23,7 +24,11 @@ const g = site.guru;
     <section class="bg-sandalwood px-4 pb-16 sm:px-6">
       <div class="mx-auto grid max-w-4xl gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:items-start">
         <Arch id="guru-portrait" aspectRatio="4/5" class="mx-auto w-full max-w-xs">
-          <SiteImage id="binni-portrait" />
+          <SiteImage
+            id="binni-portrait"
+            priority
+            sizes="(min-width: 400px) 320px, 100vw"
+          />
         </Arch>
 
         <div class="measure">
@@ -44,8 +49,9 @@ const g = site.guru;
       </div>
     </section>
 
-    <section class="bg-oxblood-deep px-4 py-14 sm:px-6 sm:py-20">
-      <div class="on-oxblood mx-auto max-w-2xl border-l-4 border-gold pl-6 sm:pl-10">
+    <section class="relative overflow-hidden bg-oxblood-deep px-4 py-14 sm:px-6 sm:py-20">
+      <AramandiWatermark />
+      <div class="on-oxblood relative z-10 mx-auto max-w-2xl border-l-4 border-gold pl-6 sm:pl-10">
         <h2 class="font-display text-2xl">What is Alankar?</h2>
         <p class="mt-4 text-base">
           Indian classical dance uses a graded examination system. Students
@@ -61,19 +67,11 @@ const g = site.guru;
     <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
       <div class="mx-auto max-w-xs">
         <Arch id="binni-performing" aspectRatio="4/5">
-          <SiteImage id="binni-performing" />
+          <SiteImage id="binni-performing" sizes="(min-width: 400px) 320px, 100vw" />
         </Arch>
         <p class="mt-4 text-center text-sm text-ink/70">
           Binni performing on stage.
         </p>
-      </div>
-    </section>
-
-    <section class="bg-sandalwood px-4 pb-14 sm:px-6 sm:pb-20">
-      <div class="mx-auto grid max-w-3xl grid-cols-3 gap-4">
-        <SiteImage id="detail-salangai" class="aspect-square" />
-        <SiteImage id="detail-diya" class="aspect-square" />
-        <SiteImage id="detail-doorway" class="aspect-square" />
       </div>
     </section>
 

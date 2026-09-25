@@ -1,12 +1,13 @@
-// Generates branded OG images using the real Kalika Nrityalay logo
-// (public/logo/mark-white.png, produced by process-logo.mjs).
+// Generates branded OG images.
 //
-// TODO(post-shoot): the brief (section 9) wants the home OG image to
-// also contain Binni's real face alongside the wordmark and tagline,
-// once real photography exists. Until then this uses the real logo
-// plus text only — no photo, no stand-in — per the section 2 honesty
-// constraints. Re-run this script (extending it to composite the real
-// portrait) after the shoot.
+// `default` uses the real Kalika Nrityalay logo (public/logo/mark-white.png)
+// — unchanged from the previous pass.
+//
+// `home` is rebuilt for the design-elevation pass (item H): composites
+// binni-cutout.png (a real, clean alpha cutout) so her face is legible
+// at thumbnail size, positioned right-of-centre to echo the hero's own
+// composition, with the wordmark + tagline in the clear left space —
+// same left/right logic as the hero itself.
 import sharp from "sharp";
 import { mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -28,7 +29,7 @@ const FONT = "Georgia, 'Times New Roman', serif";
 const W = 1200;
 const H = 630;
 
-function backgroundSvg({ tagline }) {
+function backgroundSvg() {
   return `
 <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -39,32 +40,82 @@ function backgroundSvg({ tagline }) {
   </defs>
   <rect width="${W}" height="${H}" fill="${TOKENS.oxblood}" />
   <rect width="${W}" height="${H}" fill="url(#jaali)" opacity="0.05" />
-  <rect x="${W / 2 - 60}" y="430" width="120" height="2" fill="${TOKENS.gold}" opacity="0.6" />
-  <text x="${W / 2}" y="490" text-anchor="middle" font-family="${FONT}" font-size="38" fill="${TOKENS.sandalwood}">${tagline}</text>
 </svg>`;
 }
 
-const variants = {
-  home: "Live classes for USA &amp; Canada",
-  default: "Vastral, Ahmedabad, India",
-};
+function textSvg({ x }) {
+  return `
+<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+  <text x="${x}" y="255" font-family="${FONT}" font-size="60" fill="${TOKENS.goldLight}">Kalika</text>
+  <text x="${x}" y="325" font-family="${FONT}" font-size="60" fill="${TOKENS.goldLight}">Nrityalay</text>
+  <rect x="${x}" y="365" width="90" height="3" fill="${TOKENS.gold}" opacity="0.7" />
+  <text x="${x}" y="410" font-family="${FONT}" font-size="34" fill="${TOKENS.sandalwood}">Live classes for</text>
+  <text x="${x}" y="452" font-family="${FONT}" font-size="34" fill="${TOKENS.sandalwood}">USA &amp; Canada</text>
+</svg>`;
+}
 
 const logoPath = path.join(root, "public", "logo", "mark-white.png");
 const logo = await sharp(logoPath).resize({ height: 340 }).toBuffer();
 const logoMeta = await sharp(logo).metadata();
 
-for (const [name, tagline] of Object.entries(variants)) {
-  const bg = await sharp(Buffer.from(backgroundSvg({ tagline }))).png().toBuffer();
-  const outPath = path.join(outDir, `${name}.png`);
+// --- default (unchanged): centred logo + one-line tagline ---
+{
+  const bg = await sharp(Buffer.from(backgroundSvg())).png().toBuffer();
+  const tagline = `
+  <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="${W / 2 - 60}" y="430" width="120" height="2" fill="${TOKENS.gold}" opacity="0.6" />
+    <text x="${W / 2}" y="490" text-anchor="middle" font-family="${FONT}" font-size="38" fill="${TOKENS.sandalwood}">Vastral, Ahmedabad, India</text>
+  </svg>`;
+  const taglineBuf = await sharp(Buffer.from(tagline)).png().toBuffer();
   await sharp(bg)
     .composite([
+      { input: logo, top: 40, left: Math.round((W - logoMeta.width) / 2) },
+      { input: taglineBuf, top: 0, left: 0 },
+    ])
+    .png()
+    .toFile(path.join(outDir, "default.png"));
+  console.log("wrote", path.join(outDir, "default.png"));
+}
+
+// --- home: real photo + wordmark, left/right split ---
+{
+  const cutoutPath = path.join(root, "src", "images", "binni-cutout.png");
+  const cutoutMeta = await sharp(cutoutPath).metadata();
+
+  // Crop down to head-through-waist so her face reads at thumbnail
+  // size instead of shrinking the full figure into the frame.
+  const cropHeight = Math.round(cutoutMeta.height * 0.62);
+  const cropped = await sharp(cutoutPath)
+    .extract({ left: 0, top: 0, width: cutoutMeta.width, height: cropHeight })
+    .toBuffer();
+
+  const targetHeight = H - 40;
+  const scale = targetHeight / cropHeight;
+  const photo = await sharp(cropped)
+    .resize({ height: targetHeight })
+    .toBuffer();
+  const photoMeta = await sharp(photo).metadata();
+
+  const bg = await sharp(Buffer.from(backgroundSvg())).png().toBuffer();
+  const textLeft = 70;
+  const textBuf = await sharp(Buffer.from(textSvg({ x: textLeft })))
+    .png()
+    .toBuffer();
+
+  await sharp(bg)
+    .composite([
+      { input: textBuf, top: 0, left: 0 },
       {
-        input: logo,
-        top: 40,
-        left: Math.round((W - logoMeta.width) / 2),
+        input: photo,
+        top: H - targetHeight,
+        left: W - photoMeta.width - 30,
       },
     ])
     .png()
-    .toFile(outPath);
-  console.log(`wrote ${outPath}`);
+    .toFile(path.join(outDir, "home.png"));
+  console.log("wrote", path.join(outDir, "home.png"), {
+    photoWidth: photoMeta.width,
+    photoHeight: photoMeta.height,
+    scale,
+  });
 }
