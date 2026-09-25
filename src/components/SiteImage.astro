@@ -24,9 +24,20 @@ interface Props {
    * size — measured as 80%+ wasted bytes on the photos in this site,
    * enough to blow the LCP budget on its own. */
   sizes?: string;
+  /** "cover" (default) fills the box and crops. "contain" shows the
+   * whole image, centered — needed for a transparent cutout whose own
+   * proportions don't match its container, where cropping would cut
+   * off part of the figure. */
+  fit?: "cover" | "contain";
 }
 
-const { id, class: className = "", priority = false, sizes } = Astro.props;
+const {
+  id,
+  class: className = "",
+  priority = false,
+  sizes,
+  fit = "cover",
+} = Astro.props;
 const slot = getImage(id);
 const asset =
   slot.status === "final" && slot.path ? resolveImageAsset(slot.path) : null;
@@ -43,7 +54,7 @@ const widths =
     <Image
       src={asset}
       alt={slot.alt}
-      class={`h-full w-full object-cover ${className}`}
+      class={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
       loading={priority ? "eager" : "lazy"}
       fetchpriority={priority ? "high" : "auto"}
       widths={widths}

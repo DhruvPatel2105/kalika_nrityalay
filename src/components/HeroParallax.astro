@@ -6,13 +6,18 @@
  * scroll-linked nudge was removed — brief: "no scroll-scrubbing").
  *
  * The old fourth layer (AramandiGeometryOverlay) is gone: it was
- * traced against an idealized symmetric aramandi pose, and
- * binni-hero.jpg shows Binni mid-gesture with a straight standing leg
- * — not aramandi. A wrong overlay is worse than none (brief's own
- * words). The "geometry you can see" claim now lives on
- * AramandiDivider instead, traced from six students in true aramandi.
+ * traced against an idealized symmetric aramandi pose, and the hero
+ * photo shows Binni mid-jump — not aramandi. A wrong overlay is worse
+ * than none (brief's own words). The "geometry you can see" claim now
+ * lives on AramandiDivider instead, traced from six students in true
+ * aramandi.
  *
- * The rim light is baked into the photo — no second glow is added.
+ * binni-hero.png is a transparent cutout, not a flat photo — object-
+ * contain (via SiteImage's `fit` prop) so the whole figure stays in
+ * frame instead of the raised arm or kicked-back leg getting cropped
+ * off, and the empty space around her inside the arch shows the same
+ * blurred jaali/oxblood-deep layer that shows outside it, so there's
+ * no visible seam between "inside" and "outside" the arch.
  */
 import SiteImage from "@/components/SiteImage.astro";
 import JaaliTexture from "@/components/JaaliTexture.astro";
@@ -58,6 +63,8 @@ const archLength = archPathLength();
         <SiteImage
           id="hero-binni-aramandi"
           priority
+          fit="contain"
+          class="object-center sm:object-right"
           sizes="(min-width: 1024px) 896px, (min-width: 640px) 448px, 100vw"
         />
       </div>

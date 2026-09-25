@@ -26,14 +26,14 @@ export interface ImageSlot {
 export const images: ImageSlot[] = [
   {
     id: "hero-binni-aramandi",
-    alt: "Binni Patel mid-gesture against an oxblood ground, one hand raised, weight grounded on a straight standing leg.",
-    aspectRatio: "4:5",
-    width: 1200,
-    height: 1500,
+    alt: "Binni Patel captured mid-jump, one arm raised overhead and one leg bent up behind her.",
+    aspectRatio: "396:1083",
+    width: 396,
+    height: 1083,
     focalPoint: "center",
     pages: ["/"],
     status: "final",
-    path: "binni-hero.jpg",
+    path: "binni-hero.png",
   },
   {
     id: "binni-portrait",
