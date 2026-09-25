@@ -1,22 +1,20 @@
 ---
 /**
- * Hero parallax — brief section 5. Four layers at fixed depths inside
- * a perspective scene; a small island tilts the whole scene toward the
- * pointer and slightly on scroll (rAF + lerp). Disabled below 768px
- * and under prefers-reduced-motion via the .parallax-scene base CSS
- * (transforms default to none), so JS never needs to feature-detect —
- * it just never has a visible effect to drive on those setups.
+ * Hero — design-elevation pass, item A/D. Three depth layers (blurred
+ * wall texture, arch hairline, the real photo) in a perspective scene;
+ * hero-parallax.ts tilts the scene toward the pointer only (the
+ * scroll-linked nudge was removed — brief: "no scroll-scrubbing").
  *
- * Layers 0/1 (wall texture, arch hairline) are decorative and use an
- * abstract blurred jaali texture, not a photo — there isn't a real
- * temple-wall photograph, and section 2 rules out any stand-in.
+ * The old fourth layer (AramandiGeometryOverlay) is gone: it was
+ * traced against an idealized symmetric aramandi pose, and
+ * binni-hero.jpg shows Binni mid-gesture with a straight standing leg
+ * — not aramandi. A wrong overlay is worse than none (brief's own
+ * words). The "geometry you can see" claim now lives on
+ * AramandiDivider instead, traced from six students in true aramandi.
  *
- * Also carries the one orchestrated entrance (arch draws, photo
- * fades, geometry traces) — see the shared arch-stroke-draw keyframes
- * and the photo-fade-in class below.
+ * The rim light is baked into the photo — no second glow is added.
  */
 import SiteImage from "@/components/SiteImage.astro";
-import AramandiGeometryOverlay from "@/components/AramandiGeometryOverlay.astro";
 import JaaliTexture from "@/components/JaaliTexture.astro";
 import { ARCH_PATH, archPathLength } from "@/lib/geometry";
 
@@ -57,13 +55,11 @@ const archLength = archPathLength();
 
     <div class="parallax-layer absolute inset-0" data-depth="0" data-scale="1">
       <div class="photo-fade-in h-full w-full" style={`clip-path: url(#${clipId})`}>
-        <SiteImage id="hero-binni-aramandi" />
-      </div>
-    </div>
-
-    <div class="parallax-layer absolute inset-0" data-depth="120" data-scale="0.94">
-      <div class="h-full w-full" style={`clip-path: url(#${clipId})`}>
-        <AramandiGeometryOverlay />
+        <SiteImage
+          id="hero-binni-aramandi"
+          priority
+          sizes="(min-width: 1024px) 896px, (min-width: 640px) 448px, 100vw"
+        />
       </div>
     </div>
   </div>

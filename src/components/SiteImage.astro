@@ -12,12 +12,30 @@ import { resolveImageAsset } from "@/lib/imageAssets";
 interface Props {
   id: string;
   class?: string;
+  /** Above-the-fold images (near the top of a page) should load
+   * eagerly — lazy-loading them delays the LCP paint instead of
+   * saving anything, since the browser has to discover them are
+   * needed before fetching. Defaults to lazy, which is correct for
+   * everything below the first viewport. */
+  priority?: boolean;
+  /** CSS `sizes` for the image's actual rendered width at each
+   * breakpoint (e.g. "(min-width: 768px) 768px, 100vw"). Without
+   * this, Astro ships one full-resolution file regardless of display
+   * size — measured as 80%+ wasted bytes on the photos in this site,
+   * enough to blow the LCP budget on its own. */
+  sizes?: string;
 }
 
-const { id, class: className = "" } = Astro.props;
+const { id, class: className = "", priority = false, sizes } = Astro.props;
 const slot = getImage(id);
 const asset =
   slot.status === "final" && slot.path ? resolveImageAsset(slot.path) : null;
+
+const CANDIDATE_WIDTHS = [400, 640, 800, 1000, 1200, 1600];
+const widths =
+  asset && sizes
+    ? [...new Set([...CANDIDATE_WIDTHS.filter((w) => w < asset.width), asset.width])]
+    : undefined;
 ---
 
 {
@@ -26,7 +44,10 @@ const asset =
       src={asset}
       alt={slot.alt}
       class={`h-full w-full object-cover ${className}`}
-      loading="lazy"
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : "auto"}
+      widths={widths}
+      sizes={sizes}
     />
   ) : (
     <div
