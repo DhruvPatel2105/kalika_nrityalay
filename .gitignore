@@ -7,6 +7,9 @@ lighthouse-reports/
 assets-inbox/*
 !assets-inbox/README.md
 
+# debug previews from scripts/trace-ornament.mjs
+scripts/.trace-preview-*.png
+
 # dependencies
 node_modules/
 

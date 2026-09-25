@@ -1,14 +1,13 @@
 /**
- * Every image slot the site needs, defined before any photography
- * exists. Until `status` is "final", <SiteImage> renders a labelled
- * placeholder at this exact aspect ratio instead of a real <img> —
- * never a stock photo, never an AI-generated dancer. See BRIEF.md
- * section 8 and the Appendix shot list.
+ * Every image slot the site needs. Until `status` is "final", <SiteImage>
+ * renders a labelled placeholder at this exact aspect ratio instead of a
+ * real <img> — never a stock photo, never an AI-generated dancer. See
+ * BRIEF.md section 8 and the Appendix shot list.
  *
- * When a real photo lands: drop the file in src/images/, set `path`
- * to its filename there, flip `status` to "final". <SiteImage> picks
- * it up automatically via the glob map in lib/imageAssets.ts — no
- * component changes needed.
+ * When a real photo lands: drop the file in src/images/, set `path` to
+ * its filename there, flip `status` to "final". <SiteImage> picks it up
+ * automatically via the glob map in lib/imageAssets.ts — no component
+ * changes needed.
  */
 
 export interface ImageSlot {
@@ -27,25 +26,25 @@ export interface ImageSlot {
 export const images: ImageSlot[] = [
   {
     id: "hero-binni-aramandi",
-    alt: "Binni Patel standing in full aramandi, the grounded half-seated stance of Bharatanatyam, facing the camera against a plain wall.",
+    alt: "Binni Patel mid-gesture against an oxblood ground, one hand raised, weight grounded on a straight standing leg.",
     aspectRatio: "4:5",
     width: 1200,
     height: 1500,
     focalPoint: "center",
     pages: ["/"],
-    status: "placeholder",
-    path: null,
+    status: "final",
+    path: "binni-hero.jpg",
   },
   {
     id: "binni-portrait",
-    alt: "Binni Patel, three-quarter portrait, looking warmly at the camera.",
+    alt: "Binni Patel, warm and direct, looking straight at the camera.",
     aspectRatio: "4:5",
     width: 1200,
     height: 1500,
     focalPoint: "top",
     pages: ["/guru"],
-    status: "placeholder",
-    path: null,
+    status: "final",
+    path: "binni-portrait.jpg",
   },
   {
     id: "binni-performing",
@@ -60,91 +59,58 @@ export const images: ImageSlot[] = [
   },
   {
     id: "hasta-detail",
-    alt: "Close crop of a single Bharatanatyam hasta, cleanly formed.",
+    alt: "Close detail of Binni Patel's hand and traditional gold jewellery.",
     aspectRatio: "1:1",
-    width: 1200,
-    height: 1200,
+    width: 1000,
+    height: 1000,
     focalPoint: "center",
-    pages: ["/", "/curriculum"],
-    status: "placeholder",
-    path: null,
+    pages: ["/curriculum"],
+    status: "final",
+    path: "hasta-detail.jpg",
   },
   {
     id: "feet-adavu",
-    alt: "Close crop of feet in the first adavu position, salangai visible at the ankles.",
-    aspectRatio: "1:1",
-    width: 1200,
-    height: 1200,
+    alt: "Close detail of a student's feet in turned-out aramandi, salangai and pleated costume visible, on the studio lawn.",
+    aspectRatio: "260:248",
+    width: 260,
+    height: 248,
     focalPoint: "center",
     pages: ["/curriculum"],
-    status: "placeholder",
-    path: null,
+    status: "final",
+    path: "feet-adavu.jpg",
   },
   {
-    id: "binni-teaching",
-    alt: "Binni Patel mid-correction, looking at a student during class.",
-    aspectRatio: "4:3",
-    width: 1200,
-    height: 900,
+    id: "group-sixteen",
+    alt: "Sixteen students in blue and maroon Bharatanatyam costume standing with Binni Patel, hands folded in namaskaram.",
+    aspectRatio: "1600:848",
+    width: 1600,
+    height: 848,
     focalPoint: "center",
-    pages: ["/classes"],
-    status: "placeholder",
-    path: null,
+    pages: ["/"],
+    status: "final",
+    path: "group-sixteen.jpg",
   },
   {
-    id: "studio-wide",
-    alt: "Five students at the Vastral studio in Bharatanatyam costume, hands folded in a namaskaram greeting.",
-    aspectRatio: "1404:790",
-    width: 1404,
-    height: 790,
+    id: "students-namaskaram",
+    alt: "Seven students, including Binni Patel, in green and maroon Bharatanatyam costume, hands folded in namaskaram.",
+    aspectRatio: "1600:826",
+    width: 1600,
+    height: 826,
     focalPoint: "center",
     pages: ["/classes"],
     status: "final",
-    path: "studio-wide.jpg",
+    path: "students-namaskaram.jpg",
   },
   {
-    id: "students-adavu-back",
-    alt: "Three or four students practising an adavu, photographed from behind so faces are not identifiable.",
-    aspectRatio: "16:9",
+    id: "aramandi-row",
+    alt: "Six students in true, correct aramandi — turned-out, symmetric, grounded — practising on the studio lawn.",
+    aspectRatio: "1600:688",
     width: 1600,
-    height: 900,
+    height: 688,
     focalPoint: "center",
-    pages: ["/classes", "/curriculum"],
-    status: "placeholder",
-    path: null,
-  },
-  {
-    id: "detail-salangai",
-    alt: "Close detail of salangai, the dancer's ankle bells, resting on the studio floor.",
-    aspectRatio: "1:1",
-    width: 800,
-    height: 800,
-    focalPoint: "center",
-    pages: ["/guru"],
-    status: "placeholder",
-    path: null,
-  },
-  {
-    id: "detail-diya",
-    alt: "Close detail of a diya, the oil lamp, in the studio.",
-    aspectRatio: "1:1",
-    width: 800,
-    height: 800,
-    focalPoint: "center",
-    pages: ["/guru"],
-    status: "placeholder",
-    path: null,
-  },
-  {
-    id: "detail-doorway",
-    alt: "The studio doorway at Kalika Nrityalay in Vastral, Ahmedabad.",
-    aspectRatio: "1:1",
-    width: 800,
-    height: 800,
-    focalPoint: "center",
-    pages: ["/guru"],
-    status: "placeholder",
-    path: null,
+    pages: ["/curriculum"],
+    status: "final",
+    path: "aramandi-row.jpg",
   },
   {
     id: "og-home",
@@ -154,7 +120,7 @@ export const images: ImageSlot[] = [
     height: 630,
     focalPoint: "center",
     pages: ["/"],
-    status: "placeholder",
+    status: "final",
     path: null,
   },
   {
@@ -165,7 +131,7 @@ export const images: ImageSlot[] = [
     height: 630,
     focalPoint: "center",
     pages: ["/guru", "/classes", "/curriculum", "/fees", "/trial"],
-    status: "placeholder",
+    status: "final",
     path: null,
   },
 ];
