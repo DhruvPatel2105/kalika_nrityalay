@@ -15,12 +15,18 @@ export const site = {
     city: "Ahmedabad",
     state: "Gujarat",
     country: "India",
-    // TODO(client): full street address + geo coordinates for the
-    // LocalBusiness/DanceSchool JSON-LD. Must match the Google Business
-    // Profile character-for-character once that's set up (section 10).
-    streetAddress: "",
-    postalCode: "",
+    // Must match the Google Business Profile character-for-character
+    // (brief section 10) — entered verbatim as supplied by the client.
+    streetAddress: "Kalhaar villa bungalows, Sardar Patel Ring Rd, nr. Madhav Farm Road",
+    postalCode: "382415",
+    // TODO(client): lat/lng from the studio's Google Maps pin. Omitted
+    // from the JSON-LD until supplied rather than estimated.
     geo: { lat: null as number | null, lng: null as number | null },
+    // TODO(client): the Google Business Profile's share link, once the
+    // profile exists. Until then directions fall back to an address search.
+    mapsUrl: "",
+    // Brief section 1: weekday evenings are the local students' slots.
+    inPersonSchedule: "weekday evenings",
   },
 
   // TODO(domain): placeholder until the real domain is registered.

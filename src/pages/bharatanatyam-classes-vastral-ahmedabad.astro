@@ -1,0 +1,250 @@
+---
+/**
+ * Local landing page — brief section 10: "Title tags target both
+ * intents... Do not stuff both into one tag — split by page." This is
+ * the Ahmedabad half; peacock marks it as the local track (section 4).
+ * Every fact comes from site.ts / curriculum.ts — nothing is invented,
+ * including anything about trial classes at the studio, which the
+ * client hasn't specified.
+ */
+import Layout from "@/layouts/Layout.astro";
+import Arch from "@/components/Arch.astro";
+import SiteImage from "@/components/SiteImage.astro";
+import AramandiDivider from "@/components/AramandiDivider.astro";
+import JaaliTexture from "@/components/JaaliTexture.astro";
+import FAQAccordion from "@/components/FAQAccordion.astro";
+import WhatsAppLink from "@/components/WhatsAppLink.astro";
+import { site } from "@/content/site";
+import { yearOne } from "@/content/curriculum";
+import { fullAddress, directionsHref } from "@/lib/address";
+import { breadcrumbSchema, faqPageSchema } from "@/lib/schema";
+
+const loc = site.location;
+const g = site.guru;
+const inPersonFee = site.pricing.inPerson.monthly;
+const whatsappMessage = `Hi, I'd like to know about in-person Bharatanatyam classes at the ${loc.area} studio.`;
+const path = "/bharatanatyam-classes-vastral-ahmedabad";
+
+const schema = [
+  breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: `Bharatanatyam classes in ${loc.area}, ${loc.city}`, path },
+  ]),
+  faqPageSchema("local"),
+].filter(Boolean);
+
+const buttonBase =
+  "inline-flex min-h-11 items-center justify-center px-6 py-3 font-body text-base font-medium transition-colors";
+---
+
+<Layout
+  title={`Bharatanatyam Classes in ${loc.area}, ${loc.city} — ${site.name}`}
+  description={`In-person Bharatanatyam classes for children in ${loc.area}, ${loc.city}, taught by ${g.name} (Alankar) in the Pandanallur tradition. Enquire on WhatsApp.`}
+  ogTitle={`Bharatanatyam Classes in ${loc.area}, ${loc.city}`}
+  ogDescription={`In-person classes for children, taught by ${g.name} in the Pandanallur tradition.`}
+  schema={schema}
+>
+  <main>
+    <section
+      class="relative overflow-hidden bg-peacock px-4 pt-14 pb-16 text-sandalwood sm:px-6 sm:pt-20 sm:pb-20"
+    >
+      <JaaliTexture />
+      <div class="relative z-10 mx-auto max-w-3xl">
+        <svg
+          width="56"
+          height="40"
+          viewBox="0 0 56 40"
+          aria-hidden="true"
+          class="mb-6"
+        >
+          <path
+            d="M4 38 V16 C4 6 14 2 28 2 C42 2 52 6 52 16 V38"
+            fill="none"
+            stroke="var(--color-gold-light)"
+            stroke-width="2"></path>
+        </svg>
+        <h1 class="hero-fluid-title font-display text-gold-light">
+          Bharatanatyam classes in {loc.area}, {loc.city}
+        </h1>
+        <p class="measure mt-5 text-lg">
+          In-person classes for children at our studio in {loc.area}, east
+          {" "}{loc.city} — taught by {g.name} in the Pandanallur tradition.
+        </p>
+        <address class="mt-5 text-base text-balance not-italic text-sandalwood/85">
+          {fullAddress}
+        </address>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <WhatsAppLink
+            message={whatsappMessage}
+            class={`${buttonBase} bg-gold text-oxblood-deep hover:bg-gold-light`}
+            >Message us on WhatsApp</WhatsAppLink
+          >
+          <a
+            href={directionsHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`${buttonBase} border-2 border-sandalwood/70 text-sandalwood hover:bg-sandalwood/10`}
+            >Get directions</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 pt-12 pb-4 sm:px-6 sm:pt-16">
+      <div class="mx-auto max-w-5xl">
+        <SiteImage
+          id="group-sixteen"
+          class="aspect-[1600/848] w-full"
+          priority
+          sizes="(min-width: 1024px) 1024px, 100vw"
+        />
+        <p class="mt-3 text-center text-sm text-ink/70">
+          Students at the {loc.area} studio with {g.name}.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="font-display text-3xl text-oxblood">Class details</h2>
+        <dl class="mt-8 grid gap-x-10 border-t border-peacock/25 sm:grid-cols-2">
+          <div class="border-b border-peacock/25 py-6">
+            <dt class="font-display text-lg text-peacock">Where</dt>
+            <dd class="mt-1 text-base text-ink/85">
+              {fullAddress}.{" "}
+              <a
+                href={directionsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-kn">Get directions</a
+              >
+            </dd>
+          </div>
+          <div class="border-b border-peacock/25 py-6">
+            <dt class="font-display text-lg text-peacock">When</dt>
+            <dd class="mt-1 text-base text-ink/85">
+              Classes run on {loc.inPersonSchedule}. Message us for current
+              batch timings and which batch suits your child's age.
+            </dd>
+          </div>
+          <div class="border-b border-peacock/25 py-6">
+            <dt class="font-display text-lg text-peacock">Who teaches</dt>
+            <dd class="mt-1 text-base text-ink/85">
+              {g.name} — {g.credential}, {g.lineage}. She teaches every class
+              herself.
+            </dd>
+          </div>
+          <div class="border-b border-peacock/25 py-6">
+            <dt class="font-display text-lg text-peacock">Fees</dt>
+            <dd class="mt-1 text-base text-ink/85">
+              {
+                inPersonFee !== null
+                  ? `₹${inPersonFee} a month.`
+                  : "Confirmed directly — message us on WhatsApp for the current rate."
+              }
+            </dd>
+          </div>
+          <div class="border-b border-peacock/25 py-6 sm:col-span-2">
+            <dt class="font-display text-lg text-peacock">The studio today</dt>
+            <dd class="mt-1 text-base text-ink/85">
+              {site.credibility.inPersonStudentCount} students learning in
+              {" "}{loc.area}, {loc.city} since
+              {" "}{site.credibility.inPersonStudentsSince}.
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <AramandiDivider />
+
+    <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="font-display text-3xl text-oxblood">
+          What your child learns first
+        </h2>
+        <p class="measure mt-3 text-base text-ink/80">
+          Every student starts with the same foundation, taught slowly and
+          corrected closely — the base everything in Bharatanatyam is built on.
+        </p>
+        <ul class="mt-8 grid gap-8 sm:grid-cols-2">
+          {
+            yearOne.map((item) => (
+              <li class="border-l-2 border-gold/60 pl-5">
+                <p class="font-display text-xl text-oxblood">{item.title}</p>
+                <p class="mt-1 text-base text-ink/80">{item.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-8 text-base text-ink/80">
+          From there, students follow the graded path from Prarambhik to
+          Alankar.{" "}
+          <a href="/curriculum" class="link-kn">See the full curriculum</a>, or
+          read{" "}
+          <a href="/benefits-of-bharatanatyam" class="link-kn"
+            >what children gain from Bharatanatyam</a
+          >.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-sandalwood px-4 pb-14 sm:px-6 sm:pb-20">
+      <div
+        class="mx-auto grid max-w-4xl gap-10 border-t border-oxblood/15 pt-14 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:items-center"
+      >
+        <Arch
+          id="local-guru-portrait"
+          aspectRatio="4/5"
+          class="mx-auto w-full max-w-xs"
+        >
+          <SiteImage id="binni-portrait" sizes="(min-width: 400px) 320px, 100vw" />
+        </Arch>
+        <div class="measure">
+          <h2 class="font-display text-3xl text-oxblood">Your child's teacher</h2>
+          <p class="mt-4 text-base text-ink/85">
+            {g.name} trained at the {g.school.name} in {g.school.city}, under
+            {" "}{g.trainedUnder}. She completed {g.credential} in
+            {" "}{g.credentialAwardedMonth}
+            {g.credentialAwardedYear} and opened {site.name} the following
+            month.
+          </p>
+          <p class="mt-2 text-base">
+            <a href="/guru" class="link-kn inline-block py-3">Read more about Binni</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <FAQAccordion page="local" />
+
+    <section
+      class="relative overflow-hidden bg-peacock px-4 py-14 text-center text-sandalwood sm:px-6 sm:py-20"
+    >
+      <div class="relative z-10 mx-auto max-w-2xl">
+        <h2 class="font-display text-3xl text-gold-light sm:text-4xl">
+          Ask about a batch for your child.
+        </h2>
+        <p class="mt-3 text-base text-sandalwood/90">
+          Message us on WhatsApp with your child's age, and we'll tell you
+          which batch and timing fits.
+        </p>
+        <div class="mt-8 flex justify-center">
+          <WhatsAppLink
+            message={whatsappMessage}
+            class={`${buttonBase} bg-gold text-oxblood-deep hover:bg-gold-light`}
+            >Message us on WhatsApp</WhatsAppLink
+          >
+        </div>
+        <p class="mt-8 text-base text-sandalwood/85">
+          Not in Ahmedabad? We teach{" "}
+          <a
+            href="/classes"
+            class="text-sandalwood underline decoration-gold-light underline-offset-4 hover:decoration-sandalwood"
+            >live online for families in the USA and Canada</a
+          >.
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
