@@ -26,7 +26,7 @@ export interface ImageSlot {
 export const images: ImageSlot[] = [
   {
     id: "hero-binni-aramandi",
-    alt: "Binni Patel captured mid-jump, one arm raised overhead and one leg bent up behind her.",
+    alt: "Binni Patel in Bharatanatyam costume and temple jewellery, one arm raised in a hasta, mid-movement.",
     aspectRatio: "396:1245",
     width: 396,
     height: 1245,
@@ -48,7 +48,7 @@ export const images: ImageSlot[] = [
   },
   {
     id: "binni-performing",
-    alt: "Binni Patel performing Bharatanatyam on stage, in full costume and makeup.",
+    alt: "Binni Patel performing Bharatanatyam outdoors by the water, in full costume and makeup.",
     aspectRatio: "1144:1430",
     width: 1144,
     height: 1430,
@@ -59,7 +59,7 @@ export const images: ImageSlot[] = [
   },
   {
     id: "hasta-detail",
-    alt: "Illustration of the Tripataka hasta, one of the hand gestures taught in Year One.",
+    alt: "Illustration of the Tripataka hasta.",
     aspectRatio: "849:1063",
     width: 849,
     height: 1063,
@@ -92,7 +92,7 @@ export const images: ImageSlot[] = [
   },
   {
     id: "students-namaskaram",
-    alt: "Seven students, including Binni Patel, in green and maroon Bharatanatyam costume, hands folded in namaskaram.",
+    alt: "Seven students in green and maroon Bharatanatyam costume standing with Binni Patel, all with hands folded in namaskaram.",
     aspectRatio: "1600:826",
     width: 1600,
     height: 826,
@@ -125,7 +125,7 @@ export const images: ImageSlot[] = [
   },
   {
     id: "og-default",
-    alt: "Kalika Nrityalay wordmark and tagline on the brand oxblood background.",
+    alt: "Kalika Nrityalay logo and 'Vastral, Ahmedabad, India' on the brand oxblood background.",
     aspectRatio: "1200:630",
     width: 1200,
     height: 630,
