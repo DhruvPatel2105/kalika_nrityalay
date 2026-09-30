@@ -1,0 +1,138 @@
+---
+import { render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import TwoDoorsCTA from "@/components/TwoDoorsCTA.astro";
+import { site } from "@/content/site";
+import { articleSchema, breadcrumbSchema } from "@/lib/schema";
+import {
+  getPublishedPosts,
+  formatDate,
+  readingMinutes,
+  type Post,
+} from "@/lib/blog";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const path = `/blog/${post.id}`;
+const others = (await getPublishedPosts()).filter((p) => p.id !== post.id);
+
+const schema = [
+  articleSchema({
+    type: "BlogPosting",
+    headline: data.title,
+    description: data.description,
+    path,
+    datePublished: data.pubDate,
+    dateModified: data.updatedDate,
+    author: data.author,
+  }),
+  breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Guides for parents", path: "/blog" },
+    { name: data.title, path },
+  ]),
+];
+---
+
+<Layout
+  title={`${data.title} — ${site.name}`}
+  description={data.description}
+  ogTitle={data.ogTitle ?? data.title}
+  ogDescription={data.ogDescription ?? data.description}
+  ogType="article"
+  publishedTime={data.pubDate}
+  modifiedTime={data.updatedDate ?? data.pubDate}
+  schema={schema}
+  preloadFonts
+>
+  <main>
+    <article class="bg-sandalwood px-4 pt-12 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
+      <header class="mx-auto max-w-[68ch] text-base">
+        <nav aria-label="Breadcrumb">
+          <a href="/blog" class="link-kn inline-block py-3 text-sm">Guides for parents</a>
+        </nav>
+        <h1 class="article-fluid-title mt-3 font-display text-oxblood">
+          {data.title}
+        </h1>
+        <p class="mt-4 text-lg text-ink/80">{data.description}</p>
+        <p class="mt-5 text-sm text-ink/70">
+          <span class="whitespace-nowrap">By {data.author}</span>
+          <span aria-hidden="true" class="mx-1.5 text-gold">◆</span>
+          <span class="whitespace-nowrap">
+            <time datetime={data.pubDate.toISOString()}>{formatDate(data.pubDate)}</time>
+          </span>
+          {
+            data.updatedDate && (
+              <span class="whitespace-nowrap">
+                {" "}(updated{" "}
+                <time datetime={data.updatedDate.toISOString()}>
+                  {formatDate(data.updatedDate)}
+                </time>
+                )
+              </span>
+            )
+          }
+          <span aria-hidden="true" class="mx-1.5 text-gold">◆</span>
+          <span class="whitespace-nowrap">{readingMinutes(post.body)} min read</span>
+        </p>
+        <svg
+          viewBox="0 0 200 12"
+          class="mt-8 h-3 w-40 text-gold"
+          aria-hidden="true"
+        >
+          <path d="M0 6 H86 M114 6 H200" stroke="currentColor" stroke-width="1"></path>
+          <path d="M100 1 L105 6 L100 11 L95 6 Z" fill="currentColor"></path>
+        </svg>
+      </header>
+
+      <div class="prose-kn mx-auto mt-8">
+        <Content />
+      </div>
+    </article>
+
+    <section class="border-t border-oxblood/15 bg-sandalwood px-4 py-14 sm:px-6">
+      <div class="mx-auto max-w-[68ch] text-base">
+        <h2 class="font-display text-2xl text-oxblood">Keep reading</h2>
+        <ul class="mt-6 space-y-6">
+          {
+            others.map((p) => (
+              <li class="border-l-2 border-gold/60 pl-5">
+                <a
+                  href={`/blog/${p.id}`}
+                  class="font-display text-xl text-oxblood hover:underline hover:decoration-gold hover:underline-offset-4"
+                >
+                  {p.data.title}
+                </a>
+                <p class="mt-1 text-base text-ink/75">{p.data.description}</p>
+              </li>
+            ))
+          }
+          <li class="border-l-2 border-gold/60 pl-5">
+            <a
+              href="/benefits-of-bharatanatyam"
+              class="font-display text-xl text-oxblood hover:underline hover:decoration-gold hover:underline-offset-4"
+            >
+              The benefits of learning Bharatanatyam
+            </a>
+            <p class="mt-1 text-base text-ink/75">
+              Strength, focus, expression and heritage — and what children
+              achieve along the way.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <TwoDoorsCTA />
+  </main>
+</Layout>

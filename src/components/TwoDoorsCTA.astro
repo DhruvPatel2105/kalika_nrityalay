@@ -1,0 +1,55 @@
+---
+/**
+ * The brief's "two doors" (section 4): one audience in North America,
+ * one in Ahmedabad, never merged into a single CTA. Oxblood for the
+ * online track, peacock for the local one.
+ */
+import Button from "@/components/Button.astro";
+import JaaliTexture from "@/components/JaaliTexture.astro";
+import { site } from "@/content/site";
+
+interface Props {
+  heading?: string;
+}
+const { heading = "Two ways to begin." } = Astro.props;
+
+const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five"];
+const free = site.pricing.online.freeClasses;
+const freeWord = NUMBER_WORDS[free] ?? String(free);
+---
+
+<section
+  class="on-oxblood relative overflow-hidden bg-oxblood px-4 py-14 sm:px-6 sm:py-20"
+>
+  <JaaliTexture />
+  <div class="relative z-10 mx-auto max-w-4xl">
+    <h2 class="text-center font-display text-3xl sm:text-4xl">{heading}</h2>
+    <div
+      class="mt-10 grid border-y border-gold/30 sm:grid-cols-2 sm:divide-x sm:divide-gold/30"
+    >
+      <div class="py-8 sm:pr-10">
+        <p class="font-display text-xl text-gold-light">In the USA or Canada</p>
+        <p class="mt-2 text-base text-sandalwood/90">
+          Live online classes on Saturday and Sunday mornings, your time. Your
+          first {freeWord} classes are free.
+        </p>
+        <Button href="/trial" variant="gold" class="mt-6"
+          >Book your free classes</Button
+        >
+      </div>
+      <div class="border-t border-gold/30 py-8 sm:border-t-0 sm:pl-10">
+        <p class="font-display text-xl text-gold-light">In Ahmedabad</p>
+        <p class="mt-2 text-base text-sandalwood/90">
+          In-person classes at our studio in {site.location.area}, on {
+            site.location.inPersonSchedule
+          }.
+        </p>
+        <Button
+          href="/bharatanatyam-classes-vastral-ahmedabad"
+          variant="peacock-outline"
+          class="mt-6">See studio classes</Button
+        >
+      </div>
+    </div>
+  </div>
+</section>

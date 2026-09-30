@@ -1,0 +1,101 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import DancerMotif from "@/components/DancerMotif.astro";
+import TwoDoorsCTA from "@/components/TwoDoorsCTA.astro";
+import { site } from "@/content/site";
+import { breadcrumbSchema } from "@/lib/schema";
+import { getPublishedPosts, formatDate, readingMinutes } from "@/lib/blog";
+
+const posts = await getPublishedPosts();
+
+const schema = [
+  breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Guides for parents", path: "/blog" },
+  ]),
+];
+---
+
+<Layout
+  title={`Bharatanatyam Guides for Parents — ${site.name}`}
+  description="Practical guides for parents: choosing a Bharatanatyam teacher, the graded exams from Prarambhik to Alankar, online vs in-person classes, and more."
+  ogTitle="Bharatanatyam guides for parents"
+  ogDescription="Choosing a teacher, the graded exams, online vs in-person — honest answers."
+  schema={schema}
+>
+  <main>
+    <div class="mx-auto max-w-2xl px-4 pt-14 pb-10 text-center sm:px-6 sm:pt-20">
+      <svg
+        width="56"
+        height="40"
+        viewBox="0 0 56 40"
+        aria-hidden="true"
+        class="mx-auto mb-6"
+      >
+        <path
+          d="M4 38 V16 C4 6 14 2 28 2 C42 2 52 6 52 16 V38"
+          fill="none"
+          stroke="var(--color-gold)"
+          stroke-width="2"></path>
+      </svg>
+      <h1 class="article-fluid-title font-display text-oxblood">
+        Bharatanatyam guides for parents
+      </h1>
+      <p class="measure mx-auto mt-4 text-base text-ink/80">
+        Honest answers to the questions parents ask us most — written for
+        families deciding whether, where and how their child should learn.
+      </p>
+    </div>
+
+    <section class="bg-sandalwood px-4 pb-6 sm:px-6">
+      <a
+        href="/benefits-of-bharatanatyam"
+        class="group on-oxblood relative mx-auto flex max-w-4xl flex-col gap-6 overflow-hidden bg-oxblood px-6 py-8 sm:flex-row sm:items-center sm:px-10"
+      >
+        <DancerMotif figure="a" class="h-16 w-auto shrink-0 self-start sm:self-center" />
+        <div>
+          <p class="text-sm text-sandalwood/75">Start here</p>
+          <p class="mt-1 font-display text-2xl text-gold-light group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4">
+            The benefits of learning Bharatanatyam
+          </p>
+          <p class="mt-2 text-base text-sandalwood/90">
+            Strength, focus, expression and heritage — and what children
+            achieve along the way, from graded exams to an arangetram.
+          </p>
+        </div>
+      </a>
+    </section>
+
+    <section class="bg-sandalwood px-4 py-10 sm:px-6 sm:pb-20">
+      <ul class="mx-auto max-w-4xl divide-y divide-oxblood/15 border-y border-oxblood/15">
+        {
+          posts.map((post) => (
+            <li>
+              <article class="py-8 sm:grid sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-8">
+                <p class="text-sm text-ink/70">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                  <span class="block">{readingMinutes(post.body)} min read</span>
+                </p>
+                <div class="mt-2 border-l-2 border-gold/60 pl-5 sm:mt-0">
+                  <h2 class="font-display text-2xl text-oxblood">
+                    <a
+                      href={`/blog/${post.id}`}
+                      class="hover:underline hover:decoration-gold hover:underline-offset-4"
+                    >
+                      {post.data.title}
+                    </a>
+                  </h2>
+                  <p class="mt-2 text-base text-ink/80">{post.data.description}</p>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <TwoDoorsCTA />
+  </main>
+</Layout>
