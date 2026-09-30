@@ -19,7 +19,9 @@ export interface Batch {
   startIST: string; // 24h "HH:MM"
   endIST: string; // 24h "HH:MM"
   capacity: number;
-  seatsRemaining: number;
+  /** Only set from a real enrolment count supplied by the client —
+   * when absent, no seats line renders at all. */
+  seatsRemaining?: number;
 }
 
 export const batches: Batch[] = [
@@ -31,6 +33,5 @@ export const batches: Batch[] = [
     startIST: "18:30",
     endIST: "19:30",
     capacity: 8,
-    seatsRemaining: 3,
   },
 ];
