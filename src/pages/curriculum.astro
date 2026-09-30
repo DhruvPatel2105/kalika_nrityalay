@@ -6,25 +6,7 @@ import SiteImage from "@/components/SiteImage.astro";
 import AramandiDivider from "@/components/AramandiDivider.astro";
 import TrialCTA from "@/components/TrialCTA.astro";
 import { site } from "@/content/site";
-
-const yearOne = [
-  {
-    title: "Aramandi",
-    body: "The grounded, turned-out half-seated stance that underlies almost every Bharatanatyam movement — the first thing every student learns, and the thing a trained eye checks first.",
-  },
-  {
-    title: "The first adavus",
-    body: "The basic units of movement that combine, later, into full choreography. Built slowly, with correct footwork and rhythm before speed.",
-  },
-  {
-    title: "Hastas",
-    body: "The vocabulary of hand gestures used throughout the dance, learned individually before they're combined with movement and expression.",
-  },
-  {
-    title: "Basic theory",
-    body: "The rhythmic and structural fundamentals underneath the movement — taught alongside the physical practice, not as an afterthought.",
-  },
-];
+import { yearOne } from "@/content/curriculum";
 ---
 
 <Layout
@@ -97,6 +79,16 @@ const yearOne = [
           </p>
         </div>
       </div>
+      <p class="measure mx-auto mt-12 max-w-2xl text-base text-ink/80">
+        How the levels fit together, and how exams differ from an
+        arangetram:{" "}
+        <a href="/blog/bharatanatyam-exams-prarambhik-to-alankar" class="link-kn"
+          >Bharatanatyam exams explained</a
+        >. Or read about{" "}
+        <a href="/benefits-of-bharatanatyam" class="link-kn"
+          >what children gain from Bharatanatyam</a
+        >.
+      </p>
     </section>
 
     <TrialCTA

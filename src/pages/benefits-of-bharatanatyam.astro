@@ -1,0 +1,452 @@
+---
+/**
+ * Pillar page for "benefits of Bharatanatyam" searches. Benefits are
+ * described through what the practice actually demands (aramandi,
+ * tala, abhinaya) rather than as health claims or statistics — nothing
+ * here needs a citation we don't have. Achievements stay honest per
+ * brief section 2: no claimed arangetram graduates.
+ */
+import Layout from "@/layouts/Layout.astro";
+import Arch from "@/components/Arch.astro";
+import SiteImage from "@/components/SiteImage.astro";
+import DancerMotif from "@/components/DancerMotif.astro";
+import JaaliTexture from "@/components/JaaliTexture.astro";
+import AramandiWatermark from "@/components/AramandiWatermark.astro";
+import AramandiDivider from "@/components/AramandiDivider.astro";
+import TwoDoorsCTA from "@/components/TwoDoorsCTA.astro";
+import { site } from "@/content/site";
+import { articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { getPublishedPosts } from "@/lib/blog";
+
+const path = "/benefits-of-bharatanatyam";
+const headline = "The benefits of learning Bharatanatyam";
+const description =
+  "How Bharatanatyam builds strength, focus, expression and a connection to Indian culture — and what children can achieve, from graded exams to arangetram.";
+const published = new Date("2026-09-30");
+
+const schema = [
+  articleSchema({
+    headline,
+    description,
+    path,
+    datePublished: published,
+    author: site.name,
+  }),
+  breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Benefits of Bharatanatyam", path },
+  ]),
+];
+
+const sections = [
+  { id: "body", label: "Body" },
+  { id: "mind", label: "Mind" },
+  { id: "expression", label: "Expression" },
+  { id: "heritage", label: "Heritage" },
+  { id: "achieve", label: "What students achieve" },
+];
+
+const body = [
+  {
+    title: "Leg and core strength",
+    text: "Aramandi is a deep, turned-out half-sit held while the upper body stays upright. Holding it through sequence after sequence works the thighs, hips and core in a way few children's activities do.",
+  },
+  {
+    title: "Posture",
+    text: "An upright spine, open chest and lifted head are corrected in every class until they stop being instructions and become habit.",
+  },
+  {
+    title: "Balance and coordination",
+    text: "The feet keep one rhythm while the hands form precise gestures and the eyes follow them. The whole body learns to work as one.",
+  },
+  {
+    title: "Stamina",
+    text: "Adavus are practised at three speeds, each twice as fast as the last. By the end of a class, children have done real exercise.",
+  },
+];
+
+const mind = [
+  {
+    title: "Concentration",
+    text: "Rhythm, footwork, hand gestures and gaze all have to be right at the same moment. There is no drifting through a class.",
+  },
+  {
+    title: "Memory",
+    text: "Children learn long sequences of adavus, and later whole pieces, and recall them in order — often to music, often from years before.",
+  },
+  {
+    title: "Rhythm and pattern",
+    text: "Steps are counted in cycles of beats, the tala, and recited as rhythmic syllables, the sollukattu. It is a training in timing that stays with a dancer.",
+  },
+  {
+    title: "Discipline and patience",
+    text: "Progress is measured in years. Children learn that practice, not talent alone, is what moves them forward.",
+  },
+];
+
+const expression = [
+  {
+    title: "Reading and showing emotion",
+    text: "Alongside pure dance, nritta, is abhinaya: conveying a character or a feeling through the face, the eyes and the hands. Learning it means studying how emotions look — and finding them in yourself.",
+  },
+  {
+    title: "Hand gestures as a language",
+    text: "Each hasta can carry several meanings depending on context. Children learn a vocabulary, not just a set of shapes.",
+  },
+  {
+    title: "Stage presence",
+    text: "Dancing for family, and in time on stage, teaches a child to hold a room's attention without looking away.",
+  },
+  {
+    title: "Confidence that's earned",
+    text: "The confidence Bharatanatyam gives rests on a skill she has worked for — which is the kind that lasts.",
+  },
+];
+
+const heritage = [
+  {
+    title: "Stories",
+    text: "Pieces draw on the epics and the Puranas. Children meet Krishna, Shiva, Rama and Sita through the dance, not a textbook.",
+  },
+  {
+    title: "Music and language",
+    text: "Bharatanatyam is danced to Carnatic music, with lyrics in Tamil, Telugu, Sanskrit and other languages. Children absorb far more than steps.",
+  },
+  {
+    title: "Namaskaram",
+    text: "Practice begins and ends with a salutation to the earth and to the teacher — a small daily ritual of respect.",
+  },
+  {
+    title: "Shared across generations",
+    text: "Many parents learned as children. For a family, the dance becomes something shared between them.",
+  },
+];
+
+const milestones = [
+  {
+    name: "First classes",
+    gloss: "",
+    text: "Aramandi, the first adavus, hastas and basic theory — the foundation everything else is built on.",
+  },
+  {
+    name: "Prarambhik",
+    gloss: "the beginning",
+    text: "The first graded exam: the foundations, examined by the board.",
+  },
+  {
+    name: "Praveshika",
+    gloss: "the entrance",
+    text: "A wider vocabulary of adavus and a first step into repertoire.",
+  },
+  {
+    name: "Madhyama",
+    gloss: "the middle",
+    text: "Longer pieces, more expression, deeper theory.",
+  },
+  {
+    name: "Visharad",
+    gloss: "the proficient",
+    text: "The advanced level, usually described as equivalent to a bachelor's degree — typically around seven years in.",
+  },
+  {
+    name: "Alankar",
+    gloss: "the ornament",
+    text: `The post-graduate level, equivalent to a master's. Our guru, ${site.guru.name}, holds ${site.guru.credential}.`,
+  },
+];
+
+const beyond = [
+  {
+    title: "Arangetram",
+    text: `A dancer's solo debut: a full-length performance, usually after seven to ten years of training. ${site.name} opened in ${site.founded.year}, so our students are still on the road to theirs — which is exactly why we care so much about the foundation.`,
+  },
+  {
+    title: "Performing",
+    text: "Every performance, from the living room to the stage, builds poise and nerve.",
+  },
+  {
+    title: "Teaching",
+    text: `With advanced qualifications, some dancers go on to teach. ${site.guru.name} opened ${site.name} the month after completing Alankar.`,
+  },
+  {
+    title: "A practice for life",
+    text: "Bharatanatyam isn't an activity to outgrow. Many dancers keep training, performing and learning well into adulthood.",
+  },
+];
+
+const posts = await getPublishedPosts();
+---
+
+<Layout
+  title={`Benefits of Bharatanatyam for Children — ${site.name}`}
+  description={description}
+  ogTitle={headline}
+  ogDescription="Strength, focus, expression, heritage — and what children achieve along the way."
+  schema={schema}
+>
+  <main>
+    <section
+      class="on-oxblood relative overflow-hidden bg-oxblood px-4 pt-14 pb-16 text-center sm:px-6 sm:pt-20 sm:pb-20"
+    >
+      <JaaliTexture />
+      <div class="relative z-10 mx-auto max-w-3xl">
+        <DancerMotif figure="b" class="mx-auto mb-6 h-14 w-auto" />
+        <h1 class="hero-fluid-title font-display">{headline}</h1>
+        <p class="measure mx-auto mt-5 text-lg text-sandalwood/90">
+          Bharatanatyam is one of the oldest forms of Indian classical dance.
+          For a child, it is also a training in strength, attention, expression
+          and heritage — all at once. Here is what years of practice build, and
+          what students go on to achieve.
+        </p>
+        <p class="mt-4 text-sm text-sandalwood/70">By {site.name}</p>
+        <nav aria-label="On this page" class="mt-8">
+          <ul class="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:gap-x-2">
+            {
+              sections.map((s, i) => (
+                <li class="flex items-center">
+                  {i > 0 && (
+                    <span class="mr-2 hidden text-gold sm:inline" aria-hidden="true">
+                      ◆
+                    </span>
+                  )}
+                  <a
+                    href={`#${s.id}`}
+                    class="inline-block py-2 text-base text-sandalwood/90 underline decoration-gold/60 underline-offset-4 hover:text-gold-light"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <section id="body" class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-5xl">
+        <div class="measure">
+          <h2 class="font-display text-3xl text-oxblood">
+            Strength, balance and posture
+          </h2>
+          <p class="mt-4 text-lg text-ink/85">
+            Every Bharatanatyam movement starts from aramandi. Before a child
+            learns a single step, she learns to stand.
+          </p>
+        </div>
+        <figure class="mt-10">
+          <div class="border border-gold/60">
+            <SiteImage
+              id="aramandi-row"
+              class="aspect-[1600/688] w-full"
+              sizes="(min-width: 1024px) 1024px, 100vw"
+            />
+          </div>
+          <figcaption class="mt-3 text-center text-sm text-ink/70">
+            Students holding aramandi, the stance underneath almost every
+            movement.
+          </figcaption>
+        </figure>
+        <ul class="mt-12 grid gap-x-12 gap-y-8 sm:grid-cols-2">
+          {
+            body.map((item) => (
+              <li class="border-l-2 border-gold/60 pl-5">
+                <h3 class="font-display text-xl text-oxblood">{item.title}</h3>
+                <p class="mt-1 text-base text-ink/80">{item.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section
+      id="mind"
+      class="on-oxblood relative overflow-hidden bg-oxblood-deep px-4 py-14 sm:px-6 sm:py-20"
+    >
+      <AramandiWatermark />
+      <div class="relative z-10 mx-auto max-w-5xl">
+        <div class="measure">
+          <h2 class="font-display text-3xl">Focus, memory and rhythm</h2>
+          <p class="mt-4 text-lg text-sandalwood/90">
+            Bharatanatyam asks a child to hold many things in mind at once —
+            and rewards her for it.
+          </p>
+        </div>
+        <ul class="mt-12 grid gap-x-12 gap-y-8 sm:grid-cols-2">
+          {
+            mind.map((item) => (
+              <li class="border-l-2 border-gold/50 pl-5">
+                <h3 class="font-display text-xl">{item.title}</h3>
+                <p class="mt-1 text-base text-sandalwood/85">{item.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p
+          class="mx-auto mt-14 max-w-2xl border-y border-gold/30 py-8 text-center font-display text-2xl text-gold-light"
+        >
+          Progress is measured in years — which is exactly the lesson.
+        </p>
+      </div>
+    </section>
+
+    <section id="expression" class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div
+        class="mx-auto grid max-w-5xl gap-12 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:items-start"
+      >
+        <figure>
+          <Arch id="benefits-performing" aspectRatio="4/5" class="mx-auto w-full max-w-xs">
+            <SiteImage id="binni-performing" sizes="(min-width: 400px) 320px, 100vw" />
+          </Arch>
+          <figcaption class="mt-3 text-center text-sm text-ink/70">
+            {site.guru.name}, performing.
+          </figcaption>
+        </figure>
+        <div>
+          <h2 class="font-display text-3xl text-oxblood">
+            Expression and confidence
+          </h2>
+          <p class="measure mt-4 text-lg text-ink/85">
+            Bharatanatyam is storytelling. The body keeps the rhythm; the face
+            and hands carry the story.
+          </p>
+          <ul class="mt-10 space-y-8">
+            {
+              expression.map((item) => (
+                <li class="border-l-2 border-gold/60 pl-5">
+                  <h3 class="font-display text-xl text-oxblood">{item.title}</h3>
+                  <p class="mt-1 text-base text-ink/80">{item.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="heritage"
+      class="on-oxblood bg-oxblood px-4 py-14 sm:px-6 sm:py-20"
+    >
+      <div class="mx-auto max-w-5xl">
+        <div class="measure">
+          <h2 class="font-display text-3xl">A living connection to heritage</h2>
+          <p class="mt-4 text-lg text-sandalwood/90">
+            For many families — especially those raising children far from
+            India — Bharatanatyam hands down far more than a dance.
+          </p>
+        </div>
+        <figure class="mt-10">
+          <div class="border border-gold/50">
+            <SiteImage
+              id="students-namaskaram"
+              class="aspect-[1600/826] w-full"
+              sizes="(min-width: 1024px) 1024px, 100vw"
+            />
+          </div>
+          <figcaption class="mt-3 text-center text-sm text-sandalwood/75">
+            Students in namaskaram, the salutation that opens and closes
+            practice.
+          </figcaption>
+        </figure>
+        <ul class="mt-12 grid gap-x-12 gap-y-8 sm:grid-cols-2">
+          {
+            heritage.map((item) => (
+              <li class="border-l-2 border-gold/50 pl-5">
+                <h3 class="font-display text-xl">{item.title}</h3>
+                <p class="mt-1 text-base text-sandalwood/85">{item.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section id="achieve" class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-5xl">
+        <div class="measure">
+          <h2 class="font-display text-3xl text-oxblood">
+            What students can achieve
+          </h2>
+          <p class="mt-4 text-lg text-ink/85">
+            Bharatanatyam is learned in stages, through a graded examination
+            system. Each milestone is earned over years.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-14 md:grid-cols-2">
+          <ol class="relative ml-2 border-l-2 border-gold/50 pl-8">
+            {
+              milestones.map((m) => (
+                <li class="relative pb-9 last:pb-0">
+                  <span
+                    class="absolute top-2.5 -left-[calc(2rem+7px)] h-3 w-3 rotate-45 bg-gold"
+                    aria-hidden="true"
+                  />
+                  <p class="font-display text-2xl text-oxblood">
+                    {m.name}
+                    {m.gloss && (
+                      <span class="ml-2 font-body text-base text-ink/70 italic">
+                        {m.gloss}
+                      </span>
+                    )}
+                  </p>
+                  <p class="mt-1 text-base text-ink/80">{m.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+
+          <div>
+            <h3 class="font-display text-2xl text-oxblood">
+              Beyond the certificates
+            </h3>
+            <ul class="mt-6 space-y-7">
+              {
+                beyond.map((item) => (
+                  <li class="border-l-2 border-peacock/40 pl-5">
+                    <p class="font-display text-xl text-oxblood">{item.title}</p>
+                    <p class="mt-1 text-base text-ink/80">{item.text}</p>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="mt-8 text-base text-ink/80">
+              How the levels and the arangetram fit together:{" "}
+              <a
+                href="/blog/bharatanatyam-exams-prarambhik-to-alankar"
+                class="link-kn">Bharatanatyam exams explained</a
+              >.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <AramandiDivider caption="Pandanallur bani — geometry you can see." />
+
+    <section class="bg-sandalwood px-4 py-14 sm:px-6 sm:py-20">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="font-display text-3xl text-oxblood">Keep reading</h2>
+        <ul class="mt-8 divide-y divide-oxblood/15 border-y border-oxblood/15">
+          {
+            posts.map((post) => (
+              <li class="py-5">
+                <a
+                  href={`/blog/${post.id}`}
+                  class="font-display text-xl text-oxblood hover:underline hover:decoration-gold hover:underline-offset-4"
+                >
+                  {post.data.title}
+                </a>
+                <p class="mt-1 text-base text-ink/75">{post.data.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <TwoDoorsCTA heading="Start with the foundation." />
+  </main>
+</Layout>
