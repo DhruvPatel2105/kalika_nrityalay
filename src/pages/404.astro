@@ -1,0 +1,76 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import Button from "@/components/Button.astro";
+import { site } from "@/content/site";
+
+const whatsappHref = `https://wa.me/${site.contact.whatsapp.digitsOnly}`;
+
+const routes = [
+  {
+    href: "/classes",
+    label: "Online classes",
+    note: "How a class runs, and what you need at home",
+  },
+  {
+    href: "/curriculum",
+    label: "What your child will learn",
+    note: "The graded path, from the first adavu onward",
+  },
+  {
+    href: "/fees",
+    label: "Fees and schedule",
+    note: "What it costs, and when the batches meet",
+  },
+  {
+    href: "/guru",
+    label: "About Binni Patel",
+    note: "Her training, lineage, and how she teaches",
+  },
+];
+---
+
+<Layout
+  title={`Page not found — ${site.name}`}
+  description="That page doesn't exist. Here's where to find classes, fees, and how to book a free trial."
+  ogTitle="Page not found"
+  ogDescription="That page doesn't exist — here's where to go instead."
+>
+  <main>
+    <PageIntro
+      title="That page doesn't exist"
+      intro="The link may be out of date, or the address slightly mistyped. Everything else is still here."
+    />
+
+    <section class="bg-sandalwood px-4 pb-16 sm:px-6">
+      <div class="mx-auto max-w-2xl">
+        <ul class="divide-y divide-oxblood/15 border-y border-oxblood/15">
+          {
+            routes.map((route) => (
+              <li>
+                <a
+                  href={route.href}
+                  class="flex flex-col gap-1 px-2 py-5 transition-colors hover:bg-oxblood/5"
+                >
+                  <span class="font-display text-xl text-oxblood">
+                    {route.label}
+                  </span>
+                  <span class="font-body text-base text-oxblood/70">
+                    {route.note}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+          <Button href="/trial">Book a free trial class</Button>
+          <Button href={whatsappHref} variant="peacock-outline-light">
+            Message Binni on WhatsApp
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
