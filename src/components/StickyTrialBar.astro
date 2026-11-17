@@ -1,0 +1,86 @@
+---
+/**
+ * Phone-only booking bar. The site has one job — a parent books a free
+ * trial (BRIEF.md section 1) — but on a phone the hero button scrolls
+ * away within one swipe and the next one is at the very bottom of the
+ * page. This keeps that single action one thumb-tap away in between.
+ *
+ * It stays out of the way: hidden while the page's opening section is
+ * on screen (the hero already has the button), hidden again once the
+ * closing call-to-action or the footer arrives, and never shown on
+ * desktop, where the header button is always in reach.
+ */
+import { site } from "@/content/site";
+
+const whatsappHref = `https://wa.me/${site.contact.whatsapp.digitsOnly}`;
+---
+
+<div
+  data-sticky-trial
+  inert
+  class="sticky-trial fixed inset-x-0 bottom-0 z-40 border-t border-gold/50 bg-oxblood-deep lg:hidden"
+>
+  <div class="mx-auto flex max-w-xl items-center gap-3 px-4 py-3">
+    <a
+      href="/trial"
+      class="flex min-h-12 flex-1 items-center justify-center bg-gold px-4 font-body text-base font-medium text-oxblood-deep"
+      >Book your free classes</a
+    >
+    <a
+      href={whatsappHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex h-12 w-12 shrink-0 items-center justify-center border border-gold/60 text-gold-light"
+    >
+      <span class="sr-only">Message Binni on WhatsApp</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+        <path
+          d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"
+          stroke-width="1.6"
+          stroke-linejoin="round"></path>
+        <path d="M9 9c.3 2.8 2.7 5.2 5.5 5.5" stroke-width="2.2" stroke-linecap="round"></path>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<style>
+  .sticky-trial {
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(105%);
+    visibility: hidden;
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 0.35s;
+  }
+  .sticky-trial.is-shown {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s;
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>("[data-sticky-trial]");
+  // Sections that already carry the booking button, or end the page.
+  const quiet = [
+    document.querySelector("main > section, main > div"),
+    ...document.querySelectorAll("[data-sticky-quiet], footer"),
+  ].filter((el): el is Element => el !== null);
+
+  if (bar && "IntersectionObserver" in window && quiet.length > 0) {
+    const onScreen = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) onScreen.add(entry.target);
+        else onScreen.delete(entry.target);
+      }
+      const show = onScreen.size === 0;
+      bar.classList.toggle("is-shown", show);
+      bar.inert = !show;
+    });
+    quiet.forEach((el) => io.observe(el));
+  }
+</script>

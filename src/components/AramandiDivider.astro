@@ -28,7 +28,7 @@ const placed = rowFigures.map((f) => {
 const totalW = cursor - GAP;
 ---
 
-<div class={`bg-oxblood-deep py-8 ${className}`}>
+<div class={`bg-oxblood-deep py-8 ${className}`} data-reveal="dancers">
   <svg
     viewBox={`0 0 ${totalW} ${H}`}
     preserveAspectRatio="xMidYMid meet"
@@ -36,7 +36,8 @@ const totalW = cursor - GAP;
     aria-hidden="true"
   >
     {
-      placed.map(({ f, x, w }) => (
+      placed.map(({ f, x, w }, i) => (
+        <g class="kn-dancer" style={`--i:${i}`}>
         <svg
           x={x}
           y="0"
@@ -47,12 +48,13 @@ const totalW = cursor - GAP;
         >
           <path d={f.d} fill="var(--color-gold)" opacity="0.85" />
         </svg>
+        </g>
       ))
     }
   </svg>
   {
     caption && (
-      <p class="mt-3 text-center font-display text-sm text-gold-light italic">
+      <p class="kn-dancer-caption mt-3 text-center font-display text-sm text-gold-light italic">
         {caption}
       </p>
     )
