@@ -228,6 +228,174 @@ h4 {
   border-top: 1px solid rgb(74 13 24 / 0.15);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Scroll motion.                                                         */
+/*                                                                        */
+/* Everything is visible by default. Elements only start hidden when the  */
+/* tiny script in Layout.astro has put `kn-motion` on <html> — which it   */
+/* does only when IntersectionObserver exists and the visitor has not     */
+/* asked for reduced motion. No JS, an old browser, or reduced motion all */
+/* get the plain, fully visible page.                                     */
+/*                                                                        */
+/* The vocabulary is the site's own, not a generic fade-up on every       */
+/* section: gold rules draw downward, photographs open like a curtain,    */
+/* the dancers step in one at a time, and the closing arch draws itself   */
+/* the way the hero's arch does. Transform/opacity/clip-path only, so     */
+/* nothing here can shift layout (CLS stays 0).                           */
+/* ---------------------------------------------------------------------- */
+
+.kn-motion [data-reveal] {
+  --kn-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+
+/* rise — a short, weighted lift for headings and grouped rows. */
+.kn-motion [data-reveal="rise"] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition-property: opacity, transform;
+  transition-duration: 0.8s;
+  transition-timing-function: var(--kn-ease);
+}
+.kn-motion [data-reveal="rise"].is-inview {
+  opacity: 1;
+  transform: none;
+}
+
+/* rule — the item is uncovered from the top down, so its gold (or
+   oxblood) left rule appears to be drawn before the text settles. */
+/* (The clip never reaches a full 100%: IntersectionObserver measures the
+   clipped box, so a fully clipped element would never report as on
+   screen. Opacity hides the sliver that is left.) */
+.kn-motion [data-reveal="rule"] {
+  clip-path: inset(0 0 92% 0);
+  opacity: 0;
+  transition:
+    clip-path 0.9s var(--kn-ease),
+    opacity 0.25s ease-out;
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.kn-motion [data-reveal="rule"].is-inview {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+
+/* curtain — photographs open from the centre line outward. */
+.kn-motion [data-reveal="curtain"] {
+  overflow: hidden; /* the scaled image must not widen the page */
+  clip-path: inset(0 49% 0 49%);
+  opacity: 0;
+  transition:
+    clip-path 1.1s var(--kn-ease),
+    opacity 0.2s ease-out;
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.kn-motion [data-reveal="curtain"] img {
+  transform: scale(1.06);
+  transition: transform 1.4s var(--kn-ease);
+}
+.kn-motion [data-reveal="curtain"].is-inview {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+.kn-motion [data-reveal="curtain"].is-inview img {
+  transform: none;
+}
+
+/* dancers — each traced figure of the aramandi row steps up into place. */
+.kn-motion [data-reveal="dancers"] .kn-dancer {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s var(--kn-ease),
+    transform 0.9s var(--kn-ease);
+  transition-delay: calc(var(--i, 0) * 140ms);
+}
+.kn-motion [data-reveal="dancers"].is-inview .kn-dancer {
+  opacity: 1;
+  transform: none;
+}
+.kn-motion [data-reveal="dancers"] .kn-dancer-caption {
+  opacity: 0;
+  transition: opacity 0.8s ease-out 0.75s;
+}
+.kn-motion [data-reveal="dancers"].is-inview .kn-dancer-caption {
+  opacity: 1;
+}
+
+/* arch — the closing call-to-action's torana draws itself, echoing the
+   hero. pathLength="1" on the path makes the dash maths unit-free. */
+.kn-arch-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.kn-motion [data-reveal="arch"] .kn-arch-draw {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.kn-motion [data-reveal="arch"].is-inview .kn-arch-draw {
+  stroke-dashoffset: 0;
+}
+.kn-motion [data-reveal="arch"] .kn-arch-content {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s ease-out 0.45s,
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+}
+.kn-motion [data-reveal="arch"].is-inview .kn-arch-content {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reading-progress hairline: a 2px gold line across the very top that
+   fills as the page scrolls. Pure CSS scroll-driven animation; browsers
+   without it simply never show the line. */
+.kn-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kn-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 60;
+      height: 2px;
+      background: var(--color-gold);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      animation: kn-progress linear both;
+      animation-timeline: scroll(root block);
+      pointer-events: none;
+    }
+    @keyframes kn-progress {
+      to {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+/* Buttons and links that answer the pointer: a small lift, nothing more. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .kn-lift {
+    transition:
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.25s ease-out,
+      background-color 0.15s ease-out,
+      color 0.15s ease-out;
+  }
+  .kn-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.55);
+  }
+  .kn-lift:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--color-gold-light);
   outline-offset: 2px;

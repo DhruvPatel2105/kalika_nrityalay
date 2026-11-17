@@ -12,7 +12,7 @@ const { index, title } = Astro.props;
 const num = String(index).padStart(2, "0");
 ---
 
-<li class="flex gap-5 border-t border-oxblood/15 py-6 first:border-t-0">
+<li class="flex gap-5 border-t border-oxblood/15 py-6 first:border-t-0" data-reveal="rise">
   <span class="font-display text-2xl text-oxblood" aria-hidden="true">{num}</span
   >
   <div>

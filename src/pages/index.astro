@@ -23,8 +23,13 @@ import { site } from "@/content/site";
   <main>
     <section class="relative overflow-hidden bg-oxblood px-4 py-10 sm:px-6 sm:py-16">
       <JaaliTexture />
-      <div class="relative z-10 mx-auto max-w-xl sm:max-w-2xl lg:max-w-4xl">
-        <div class="relative">
+      <div class="relative z-10 mx-auto max-w-xl sm:max-w-2xl lg:max-w-6xl">
+        <!-- >=1024px: two columns — copy on the left, the arch on the
+             right, the arch sized to the viewport so the headline and
+             both doors are on the first screen of a laptop. Before
+             this the arch alone was 1120px tall and the buttons sat
+             below the fold. -->
+        <div class="hero-stage relative lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-14">
           <HeroParallax />
 
           <!-- ≥640px: headline lives in the cleared left third of the
@@ -33,17 +38,17 @@ import { site } from "@/content/site";
                that point — both measured against the actual photo,
                not guessed. -->
           <div
-            class="on-oxblood hero-overlay-copy pointer-events-none absolute top-[43%] left-[6%] hidden w-[50%] flex-col sm:flex"
+            class="on-oxblood hero-overlay-copy pointer-events-none absolute top-[43%] left-[6%] hidden w-[50%] flex-col sm:flex lg:pointer-events-auto lg:static lg:order-first lg:w-auto"
           >
             <h1 class="font-display hero-overlay-title text-balance">
               Learn Bharatanatyam<br />from Ahmedabad.
             </h1>
-            <p class="mt-4 text-base">
+            <p class="mt-4 text-base lg:mt-6 lg:text-lg lg:text-sandalwood/90">
               Live weekend classes for children in the USA and Canada,
               taught by a Master's-qualified guru in the Pandanallur
               tradition.
             </p>
-            <div class="pointer-events-auto mt-6 flex flex-col gap-3">
+            <div class="pointer-events-auto mt-6 flex flex-col gap-3 lg:mt-8 lg:w-fit xl:w-auto xl:flex-row">
               <Button href="/trial" variant="gold"
                 >Book your free classes</Button
               >
@@ -51,6 +56,13 @@ import { site } from "@/content/site";
                 >I'm in Ahmedabad — see local classes</Button
               >
             </div>
+            <!-- Three facts stated elsewhere on the site (TrialCTA,
+                 ReasonsTorana), gathered where the decision is made. -->
+            <ul class="hero-facts mt-8 hidden gap-x-7 gap-y-2 border-t border-gold/30 pt-5 text-base text-sandalwood/85 lg:flex lg:flex-wrap">
+              <li>First two classes free</li>
+              <li>Batches of six to eight</li>
+              <li>Weekend mornings, your time</li>
+            </ul>
           </div>
         </div>
 
@@ -90,13 +102,13 @@ import { site } from "@/content/site";
       class="on-oxblood bg-ink px-4 py-14 text-center sm:px-6 sm:py-20"
       style="padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));"
     >
-      <h2 class="font-display text-2xl text-gold-light sm:text-3xl">
+      <h2 class="font-display text-2xl text-gold-light sm:text-3xl" data-reveal="rise">
         A real school. Real students.
       </h2>
       <p class="mx-auto mt-3 max-w-md text-base text-sandalwood/85">
         Sixteen students and their teacher, Vastral, Ahmedabad.
       </p>
-      <div class="mx-auto mt-8 max-w-5xl">
+      <div class="mx-auto mt-8 max-w-5xl" data-reveal="curtain">
         <SiteImage
           id="group-sixteen"
           class="aspect-[1600/848] w-full"
@@ -135,6 +147,37 @@ import { site } from "@/content/site";
   .hero-overlay-title {
     font-size: clamp(1.5rem, 4vw + 0.5rem, 3.25rem);
     line-height: 1.05;
+  }
+
+  /* >=1024px two-column hero. The arch keeps its 4:5 shape but its
+     height follows the viewport (header + section padding = ~13rem),
+     so the whole composition sits on one laptop screen; never smaller
+     than 22rem wide, never wider than 32rem. */
+  /* Each fact carries its own small gold diamond (the jaali's lattice
+     node, as in the article lists), so a wrapped row still reads as a
+     list rather than leaving a separator dangling at a line end. */
+  .hero-facts li {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .hero-facts li::before {
+    content: "";
+    width: 0.42em;
+    height: 0.42em;
+    flex: none;
+    background: var(--color-gold);
+    transform: rotate(45deg);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-stage :global(.parallax-container) {
+      width: clamp(22rem, calc((100svh - 13rem) * 0.8), 32rem);
+    }
+    .hero-overlay-title {
+      font-size: clamp(2.75rem, 3.4vw + 1rem, 4.25rem);
+      line-height: 1.04;
+    }
   }
 
   /* Final beat of the hero's one orchestrated entrance (brief section

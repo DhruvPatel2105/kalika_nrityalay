@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import StickyTrialBar from "@/components/StickyTrialBar.astro";
 import { localBusinessSchema } from "@/lib/schema";
 
 interface Props {
@@ -24,6 +25,10 @@ interface Props {
    * fixes that; photo-led pages skip it so the fonts don't compete with
    * their LCP image. */
   preloadFonts?: boolean;
+  /** The phone-only "Book your free classes" bar that follows the
+   * reader down the page. Off for the Ahmedabad in-person page, whose
+   * visitors are on the local track, not the online trial. */
+  stickyTrialBar?: boolean;
 }
 
 const {
@@ -37,6 +42,7 @@ const {
   publishedTime,
   modifiedTime,
   preloadFonts = false,
+  stickyTrialBar = true,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -110,10 +116,50 @@ const allSchema = [localBusinessSchema(), ...schema];
         <script type="application/ld+json" set:html={JSON.stringify(item)} is:inline />
       ))
     }
+
+    <!-- Scroll motion (see global.css). Inline and in <head> so the
+         starting state is set before first paint — no flash of content
+         that then hides. If anything here fails, the class comes off and
+         the page is simply fully visible. ~0.5KB. -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        if (
+          !("IntersectionObserver" in window) ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        )
+          return;
+        root.classList.add("kn-motion");
+        function start() {
+          try {
+            var io = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  if (!entry.isIntersecting) return;
+                  entry.target.classList.add("is-inview");
+                  io.unobserve(entry.target);
+                });
+              },
+              { rootMargin: "0px 0px -10% 0px", threshold: 0 },
+            );
+            document.querySelectorAll("[data-reveal]").forEach(function (el) {
+              io.observe(el);
+            });
+          } catch (e) {
+            root.classList.remove("kn-motion");
+          }
+        }
+        if (document.readyState === "loading")
+          document.addEventListener("DOMContentLoaded", start);
+        else start();
+      })();
+    </script>
   </head>
   <body class="bg-sandalwood font-body text-ink">
+    <div class="kn-progress" aria-hidden="true"></div>
     <Header />
     <slot />
     <Footer />
+    {stickyTrialBar && <StickyTrialBar />}
   </body>
 </html>

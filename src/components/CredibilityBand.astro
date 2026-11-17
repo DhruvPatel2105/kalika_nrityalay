@@ -32,8 +32,8 @@ const facts = [
   <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6">
     <ul class="grid gap-6 sm:grid-cols-2">
       {
-        facts.map((fact) => (
-          <li class="border-l-2 border-gold/40 pl-4">
+        facts.map((fact, i) => (
+          <li class="border-l-2 border-gold/40 pl-4" data-reveal="rule" style={`--i:${i}`}>
             <p class="font-display text-lg text-gold-light">{fact.label}</p>
             <p class="mt-1 text-base text-sandalwood/90">{fact.detail}</p>
           </li>
