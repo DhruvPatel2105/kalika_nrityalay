@@ -5,5 +5,9 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
-  }
+  },
+  // Required by `wrangler preview`, which Workers Builds runs for
+  // branch/PR builds. Empty is valid: assets and compatibility settings
+  // stay at the top level.
+  "previews": {}
 }
